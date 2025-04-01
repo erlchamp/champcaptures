@@ -1,0 +1,111 @@
+{{ define "main" }}
+  <!-- Banner -->
+  {{ with .Params.banner }}
+    <section class="section p-0">
+      <!-- Full-width banner image -->
+      <div class="w-full">
+        {{ partial "image" (dict "Src" .image "Alt" "Banner image" "Loading" "eager" "Class" "w-full" "DisplayXL" "1920x1080" ) }}
+      </div>
+      <!-- Banner content below -->
+      <div class="container mx-auto text-center py-8">
+        <h1 class="mb-4 text-h3 lg:text-h1">
+          {{ .title | markdownify }}
+        </h1>
+        <p class="mb-8">
+          {{ .content | markdownify }}
+        </p>
+        {{ with .button }}
+          {{ if .enable }}
+            <a class="btn btn-primary" href="{{ .link | absURL }}"
+               {{ if strings.HasPrefix .link `http` }} target="_blank" rel="noopener" {{ end }}>
+              {{ .label }}
+              <i class="fa fa-arrow-right pl-2"></i>
+            </a>
+          {{ end }}
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+  <!-- /Banner -->
+  <!-- /Banner -->
+
+  <!-- Features -->
+  {{ range $i, $e:= .Params.features }}
+    <section class="section-sm {{ if (modBool $i 2) }}bg-gradient{{ end }}">
+      <div class="container">
+        <div class="row items-center justify-between">
+          <div
+            class="mb:md-0 {{ if not (modBool $i 2) }}
+              md:order-2
+            {{ end }} md:col-5 mb-6">
+            {{ partial "image" (dict "Src" .image "Alt" "feature image" "DisplayXL" "520x" "DisplayLG" "425x" "DisplayMD" "360x") }}
+          </div>
+          <div
+            class="{{ if not (modBool $i 2) }}
+              md:order-1
+            {{ end }} md:col-7 lg:col-6">
+            <h2 class="mb-4">
+              {{ .title | markdownify }}
+            </h2>
+            <p class="mb-8 text-lg">
+              {{ .content | markdownify }}
+            </p>
+            <ul>
+              {{ range .bulletpoints }}
+                <li class="relative mb-4 pl-6">
+                  <i class="fa fa-check absolute left-0 top-1.5"></i>
+                  {{ . | markdownify }}
+                </li>
+              {{ end }}
+            </ul>
+            {{ with .button }}
+              {{ if .enable }}
+                <a class="btn btn-primary mt-6" href="{{ .link | absURL }}">
+                  {{ .label }}
+                  <i class="fa fa-arrow-right pl-2"></i>
+                </a>
+              {{ end }}
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    </section>
+  {{ end }}
+  <!-- /Features -->
+
+<!-- Skills -->
+{{ with site.GetPage "sections/skills" }}
+  {{ if .Params.enable }}
+    <section class="section">
+      <div class="container">
+        <div class="row">
+          <div class="md:col-10 lg:col-8 xl:col-6 mx-auto mb-12 text-center">
+            <h2 class="mb-4">
+              {{ .Title | markdownify }}
+            </h2>
+            <p>
+              {{ .Params.description | markdownify }}
+            </p>
+          </div>
+          <div class="col-12">
+            <!-- Grid layout for skills -->
+            <div class="row">
+              {{ range .Params.skills }}
+                <div class="col-12 md:col-6 lg:col-4 mb-6">
+                  <div class="bg-light dark:bg-darkmode-light rounded-lg p-6 flex flex-col items-center">
+                    {{ if .image }}
+                      {{ partial "image" (dict "Src" .image "Alt" .title "Size" "100x100" "Class" "mb-4") }}
+                    {{ end }}
+                    <h3 class="text-xl font-bold">{{ .title }}</h3>
+                  </div>
+                </div>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {{ end }}
+{{ end }}
+<!-- /Skills -->
+{{ end }}
