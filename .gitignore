@@ -1,1 +1,3 @@
 /resources/_gen/
+/public/images/
+.DS_Store

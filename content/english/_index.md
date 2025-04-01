@@ -1,9 +1,18 @@
 ---
 # Banner
 banner:
-  title: "Welcome, Let's Create and Build"
-  content: "Explore my portfolio and get a glimpse of my professional background."
+  title: "I’m orchestrating automation and infrastructure to build resilient, scalable platforms as a DevOps and Platform Engineer."
+  content: ""
   image: "/images/banner-hk.png"
+  button:
+    enable: false
+    label: "Get Started For Free"
+    link: "https://github.com/zeon-studio/hugoplate"
+
+intro:
+  title: ""
+  content: ""
+  image: "/images/about.png"
   button:
     enable: false
     label: "Get Started For Free"
@@ -11,15 +20,10 @@ banner:
 
 # Features
 features:
-  - title: "Hello! I'm Erlou Miguel!"
+  - title: ""
     image: "/images/profile.png"
-    content: "I'm a DevOps Engineer and Platform Architect dedicated to building robust, scalable, and secure systems. I specialize in automation, continuous integration/deployment, and cloud-native solutions to drive efficiency and innovation."
+    content: ""
     bulletpoints:
-      - "Expert in designing and managing CI/CD pipelines"
-      - "Proficient with Docker, Kubernetes, AWS, and Azure"
-      - "Skilled in infrastructure as code and automation"
-      - "Focused on performance optimization and security"
-      - "Committed to continuous improvement and modern DevOps practices"
     button:
       enable: false
       label: "Learn More"
