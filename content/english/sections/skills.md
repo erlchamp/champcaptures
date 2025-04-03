@@ -5,14 +5,20 @@ description: "Don't just take our word for it - hear from some of our satisfied 
 
 # Testimonials
 skills:
-  - title: "Terraform"
-    image: "/images/terraform.svg"
-  - title: "Ansible"
-    image: "/images/ansible-logo.png"
-  - title: "Docker"
-    image: "/images/docker-logo.png"
-  - title: "Kubernetes"
-    image: "/images/kubernetes-logo.png"
+  - title: "Infra-as-Code"
+    image: "/images/infraascode.png"
+  - title: "Automation"
+    image: "/images/automation.png"
+  - title: "DevOps"
+    image: "/images/devops.png"
+  - title: "Platform Security"
+    image: "/images/platformsecurity.png"
+  - title: "Cloud Architecture"
+    image: "/images/clouddesign.png"
+  - title: "Observability"
+    image: "/images/observability.png"
+  - title: "Monitoring"
+    image: "/images/monitoring.png"
 
 # don't create a separate page
 _build:
