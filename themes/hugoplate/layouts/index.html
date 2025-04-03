@@ -100,30 +100,34 @@
   {{ if .Params.enable }}
     <section class="section">
       <div class="container">
-        <div class="row">
-          <div class="md:col-10 lg:col-8 xl:col-6 mx-auto mb-12 text-center">
-            <h2 class="mb-4">
-              {{ .Title | markdownify }}
-            </h2>
-            <p>
-              {{ .Params.description | markdownify }}
-            </p>
-          </div>
-          <div class="col-12">
-            <!-- Grid layout for skills -->
-            <div class="row">
-              {{ range .Params.skills }}
-                <div class="col-12 md:col-6 lg:col-4 mb-6">
-                  <div class="bg-light dark:bg-darkmode-light rounded-lg p-6 flex flex-col items-center">
-                    {{ if .image }}
-                      {{ partial "image" (dict "Src" .image "Alt" .title "Size" "100x100" "Class" "mb-4") }}
-                    {{ end }}
-                    <h3 class="text-xl font-bold">{{ .title }}</h3>
-                  </div>
+        <!-- Section Title & Description -->
+        <div class="text-center mb-8">
+          <h2 class="mb-2">
+            {{ .Title | markdownify }}
+          </h2>
+          <p class="text-sm">
+            {{ .Params.description | markdownify }}
+          </p>
+        </div>
+
+        <!-- Horizontal Flex Layout (Single Row) -->
+        <div class="flex flex-nowrap overflow-x-auto gap-2 justify-center items-start">
+          {{ range .Params.skills }}
+            <div class="bg-white rounded-lg shadow-sm w-[200px] h-[220px] p-2 flex flex-col items-center">
+              <!-- Icon/Image -->
+              {{ if .image }}
+                <div class="mb-1">
+                  {{ partial "image" (dict "Src" .image "Alt" .title "Size" "500x500") }}
                 </div>
               {{ end }}
+              <!-- Text Container -->
+              <div class="flex-1 flex items-center justify-center overflow-hidden text-center px-1">
+                <h3 class="text-sm font-semibold leading-tight break-words">
+                  {{ .title }}
+                </h3>
+              </div>
             </div>
-          </div>
+          {{ end }}
         </div>
       </div>
     </section>
