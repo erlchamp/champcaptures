@@ -138,7 +138,7 @@
 {{ with site.GetPage "sections/projects" }}
   {{ if .Params.enable }}
     <section class="section p-0">
-      <!-- Title & Description (centered, just like Features) -->
+      <!-- Title & Description -->
       <div class="text-center mb-8">
         <h2 class="mb-2">
           {{ .Title | markdownify }}
@@ -148,17 +148,20 @@
         </p>
       </div>
 
-      <!-- Two side-by-side images, no gap, full width -->
+      <!-- 2 columns, no gap, full width -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-0 w-full">
         {{ range .Params.projects }}
-          <div class="relative w-full h-[500px]">
-            <!-- Entire box is clickable -->
-            <a href="{{ .link | absURL }}" class="group block w-full h-full relative">
-              <!-- Render the image at 960x600; it will fill half the width (object-cover) -->
-              {{ partial "image" (dict "Src" .image "Alt" .title "Loading" "eager" "Class" "w-full h-full object-cover" "DisplayXL" "960x600") }}
+          <div class="relative w-full">
+            <!-- Clickable Image Box -->
+            <a href="{{ .link | absURL }}" class="group block w-full relative">
+              <!-- Render the image at 960×640; no forced height -->
+              {{ partial "image" (dict "Src" .image "Alt" .title "Loading" "eager" 
+                "Class" "w-full h-auto object-cover" "DisplayXL" "960x640") }}
 
-              <!-- Hover Overlay (only visible on hover) -->
-              <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out bg-black bg-opacity-30 flex items-center justify-center">
+              <!-- Hover Overlay -->
+              <div 
+                class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 
+                           ease-in-out bg-black bg-opacity-30 flex items-center justify-center">
                 <span class="text-white text-2xl font-bold">
                   {{ .title | markdownify }}
                 </span>
@@ -171,6 +174,5 @@
   {{ end }}
 {{ end }}
 <!-- /Projects -->
-
 
 {{ end }}
