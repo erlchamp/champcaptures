@@ -278,6 +278,9 @@
   .sticky {
     position: sticky;
   }
+  .inset-0 {
+    inset: calc(var(--spacing) * 0);
+  }
   .start-1 {
     inset-inline-start: calc(var(--spacing) * 1);
   }
@@ -2170,12 +2173,6 @@
       padding-bottom: 0;
     }
   }
-  .line-clamp-2 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
   .line-clamp-none {
     overflow: visible;
     display: block;
@@ -2275,8 +2272,11 @@
   .h-\[220px\] {
     height: 220px;
   }
-  .h-\[500px\] {
-    height: 500px;
+  .h-\[600px\] {
+    height: 600px;
+  }
+  .h-full {
+    height: 100%;
   }
   .h-screen {
     height: 100vh;
@@ -2314,9 +2314,6 @@
   }
   .w-\[200px\] {
     width: 200px;
-  }
-  .w-\[500px\] {
-    width: 500px;
   }
   .w-full {
     width: 100%;
@@ -2805,9 +2802,6 @@
   .grid-cols-subgrid {
     grid-template-columns: subgrid;
   }
-  .grid-rows-2 {
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-  }
   .grid-rows-none {
     grid-template-rows: none;
   }
@@ -2957,6 +2951,9 @@
   }
   .justify-items-stretch {
     justify-items: stretch;
+  }
+  .gap-0 {
+    gap: calc(var(--spacing) * 0);
   }
   .gap-2 {
     gap: calc(var(--spacing) * 2);
@@ -3365,6 +3362,9 @@
   .bg-\[var\(--my_variable\)\] {
     background-color: var(--my_variable);
   }
+  .bg-black {
+    background-color: var(--color-black);
+  }
   .bg-black\/50 {
     background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
   }
@@ -3618,9 +3618,6 @@
   }
   .p-2 {
     padding: calc(var(--spacing) * 2);
-  }
-  .p-3 {
-    padding: calc(var(--spacing) * 3);
   }
   .p-4 {
     padding: calc(var(--spacing) * 4);
@@ -4326,6 +4323,10 @@
   .transition-normal {
     transition-behavior: normal;
   }
+  .duration-300 {
+    --tw-duration: 300ms;
+    transition-duration: 300ms;
+  }
   .ease-in {
     --tw-ease: var(--ease-in);
     transition-timing-function: var(--ease-in);
@@ -4712,6 +4713,13 @@
   }
   .transform-view {
     transform-box: view-box;
+  }
+  .group-hover\:opacity-100 {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        opacity: 100%;
+      }
+    }
   }
   .hover\:prose-lg {
     &:hover {
@@ -5771,11 +5779,6 @@
   .md\:grid-cols-2 {
     @media (width >= 48rem) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-  .md\:grid-cols-3 {
-    @media (width >= 48rem) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   .md\:bg-yellow-200 {
@@ -9781,6 +9784,10 @@ input#nav-toggle:checked ~ #nav-menu {
   syntax: "*";
   inherits: false;
 }
+@property --tw-duration {
+  syntax: "*";
+  inherits: false;
+}
 @property --tw-ease {
   syntax: "*";
   inherits: false;
@@ -9798,10 +9805,6 @@ input#nav-toggle:checked ~ #nav-menu {
   inherits: false;
 }
 @property --tw-contain-style {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-duration {
   syntax: "*";
   inherits: false;
 }
