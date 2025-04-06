@@ -2272,11 +2272,15 @@
   .h-\[220px\] {
     height: 220px;
   }
+
   .h-\[500px\] {
     height: 500px;
   }
   .h-\[640px\] {
     height: 640px;
+    
+  .h-auto {
+    height: auto;
   }
   .h-full {
     height: 100%;
