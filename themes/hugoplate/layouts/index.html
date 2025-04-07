@@ -138,33 +138,47 @@
 {{ with site.GetPage "sections/projects" }}
   {{ if .Params.enable }}
     <section class="section p-0">
-      <!-- Title & Description -->
-      <div class="text-center mb-8">
-        <h2 class="mb-2">
-          {{ .Title | markdownify }}
-        </h2>
-        <p class="text-sm">
-          {{ .Params.description | markdownify }}
-        </p>
+      <!-- Title + Description -->
+      <div class="container mx-auto text-center py-8">
+        <h2 class="mb-4">{{ .Title | markdownify }}</h2>
+        <p class="text-sm">{{ .Params.description | markdownify }}</p>
       </div>
 
-      <!-- 2 columns, no gap, full width -->
+      <!-- Projects Grid (two columns) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-0 w-full">
         {{ range .Params.projects }}
-          <div class="relative w-full">
-            <!-- Clickable Image Box -->
-            <a href="{{ .link | absURL }}" class="group block w-full relative">
-              <!-- Render the image at 960×640; no forced height -->
-              {{ partial "image" (dict "Src" .image "Alt" .title "Loading" "eager" 
-                "Class" "w-full h-auto object-cover" "DisplayXL" "960x640") }}
+          <div class="relative w-full" style="padding-top: 62.5%;">
+            <!-- 62.5% = (600 / 960) * 100, preserving an 8:5 aspect ratio -->
 
-              <!-- Hover Overlay -->
-              <div 
-                class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 
-                           ease-in-out bg-black bg-opacity-30 flex items-center justify-center">
-                <span class="text-white text-2xl font-bold">
-                  {{ .title | markdownify }}
-                </span>
+            <a href="{{ .link | absURL }}" class="group block w-full h-full absolute inset-0">
+              <!-- Base Image (using your "image" partial) -->
+              {{ partial "image" (dict 
+                  "Src" .image 
+                  "Alt" .title 
+                  "Loading" "eager"
+                  "Class" "w-full h-full object-cover"
+                  "DisplayXL" "960x600"
+              ) }}
+
+              <!-- Hover overlay -->
+              <div
+                class="absolute inset-0 opacity-0 group-hover:opacity-100
+                       transition duration-300 ease-in-out
+                       flex items-center justify-center"
+              >
+                {{ if .overlayImage }}
+                  {{ partial "image" (dict 
+                      "Src" .overlayImage 
+                      "Alt" .title 
+                      "Loading" "eager"
+                      "Class" "w-full h-full object-cover"
+                      "DisplayXL" "960x600"
+                  ) }}
+                {{ else }}
+                  <span class="text-white text-2xl font-bold">
+                    {{ .title | markdownify }}
+                  </span>
+                {{ end }}
               </div>
             </a>
           </div>
