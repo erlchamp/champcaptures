@@ -1,6 +1,6 @@
 ---
 enable: true
-title: "Projects_Jam"
+title: "Projects"
 description: "Explore my creative and technical projects."
 projects:
   - title: "Photography Works"
