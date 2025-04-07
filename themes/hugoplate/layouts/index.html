@@ -57,12 +57,12 @@
 {{ end }}
 <!-- /Intro -->
 
-  <!-- Features -->
-  {{ range $i, $e := .Params.features }}
-  <section class="section p-0 {{ if (modBool $i 2) }}bg-gradient{{ end }}">
+<!-- About -->
+{{ with index .Params.about 0 }}
+  <section id="about" class="section p-0 {{ if (modBool 0 2) }}bg-gradient{{ end }}">
     <!-- Full-width feature image -->
     <div class="w-full">
-      {{ partial "image" (dict "Src" .image "Alt" "Feature image" "Loading" "eager" "Class" "w-full" "DisplayXL" "1920x600" ) }}
+      {{ partial "image" (dict "Src" .image "Alt" "Feature image" "Loading" "eager" "Class" "w-full" "DisplayXL" "1920x600") }}
     </div>
     <!-- Feature content below the image -->
     <div class="container mx-auto text-center py-8">
@@ -93,12 +93,12 @@
     </div>
   </section>
 {{ end }}
-  <!-- /Features -->
+<!-- /About -->
 
 <!-- Skills -->
 {{ with site.GetPage "sections/skills" }}
   {{ if .Params.enable }}
-    <section class="section">
+    <section id="skills" class="section">
       <div class="container">
         <!-- Section Title & Description -->
         <div class="text-center mb-8">
@@ -137,7 +137,7 @@
 <!-- Projects -->
 {{ with site.GetPage "sections/projects" }}
   {{ if .Params.enable }}
-    <section class="section p-0">
+    <section id="projects" class="section p-0">
       <!-- Title + Description -->
       <div class="container mx-auto text-center py-8">
         <h2 class="mb-4">{{ .Title | markdownify }}</h2>

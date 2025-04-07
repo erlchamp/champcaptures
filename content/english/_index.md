@@ -19,7 +19,7 @@ intro:
     link: "https://github.com/zeon-studio/hugoplate"
 
 # Features
-features:
+about:
   - title: ""
     image: "/images/profile.png"
     content: ""
