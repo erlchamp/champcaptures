@@ -1,0 +1,42 @@
+/* Hide the logo text */
+.navbar-brand {
+    display: none !important;
+  }
+  
+  /* Adjust the menu link font styling */
+#nav-menu .nav-link {
+    font-size: 1.25rem;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+/* Adjust the right-side container on large screens (>=1024px) */
+@media (min-width: 1024px) {
+    div.order-1.ml-auto.flex.items-center.md\:order-2.lg\:ml-0 {
+      margin-left: auto !important;  /* ensures it stays on the right */
+      justify-content: flex-end !important;  /* aligns items to the right within that container */
+    }
+  }
+
+
+header.header,
+header.header nav.navbar,
+header.header nav.navbar.container {
+    margin: 10 !important;
+    padding: 10 !important;
+  }
+
+header.header,
+  .header {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+ul.navbar-nav {
+    margin: 5 !important;
+    padding: 5 !important;
+  }
+
+  /* Optionally, add some spacing between the items */
+  #nav-menu.navbar-nav li {
+    margin-right: 1rem;
+  }
