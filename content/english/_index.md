@@ -7,7 +7,7 @@ banner:
   button:
     enable: false
     label: "Get Started For Free"
-    link: "https://github.com/zeon-studio/hugoplate"
+    link: ""
 
 intro:
   title: ""
@@ -16,7 +16,7 @@ intro:
   button:
     enable: false
     label: "Get Started For Free"
-    link: "https://github.com/zeon-studio/hugoplate"
+    link: ""
 
 # Features
 about:
