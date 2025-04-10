@@ -7,11 +7,11 @@
         {{ partial "image" (dict "Src" .image "Alt" "Banner image" "Loading" "eager" "Class" "w-full" "DisplayXL" "1920x900" ) }}
       </div>
       <!-- Banner content below -->
-      <div class="container mx-auto text-center py-8">
-        <h1 class="mb-4 text-base lg:text-lg">
+      <div class="container mx-auto text-center pt-8 pb-0">
+        <h1 class="mb-2 text-base lg:text-lg banner-title">
           {{ .title | markdownify }}
         </h1>
-        <p class="mb-8">
+        <p class="mb-0">
           {{ .content | markdownify }}
         </p>
         {{ with .button }}
@@ -35,9 +35,9 @@
     <div class="w-full">
       {{ partial "image" (dict "Src" .image "Alt" "Banner image" "Loading" "eager" "Class" "w-full" "DisplayXL" "1920x600" ) }}
     </div>
-    <!-- Banner content below -->
-    <div class="container mx-auto text-center py-4">
-      <h1 class="mb-4 text-h3 lg:text-h1">
+    <!-- Intro content below -->
+    <div class="container mx-auto text-center py-1">
+      <h1 class="mb-0 text-h3 lg:text-h1">
         {{ .title | markdownify }}
       </h1>
       <p class="mb-8">
@@ -65,7 +65,7 @@
       {{ partial "image" (dict "Src" .image "Alt" "Feature image" "Loading" "eager" "Class" "w-full" "DisplayXL" "1920x600") }}
     </div>
     <!-- Feature content below the image -->
-    <div class="container mx-auto text-center py-8">
+    <div class="container mx-auto text-center py-0">
       <h2 class="mb-4 text-h3 lg:text-h1">
         {{ .title | markdownify }}
       </h2>
@@ -101,7 +101,7 @@
     <section id="skills" class="section">
       <div class="container">
         <!-- Section Title & Description -->
-        <div class="text-center mb-8">
+        <div class="text-center mb-8 skills-title">
           <h2 class="mb-2">
             {{ .Title | markdownify }}
           </h2>
@@ -139,7 +139,7 @@
   {{ if .Params.enable }}
     <section id="projects" class="section p-0">
       <!-- Title + Description -->
-      <div class="container mx-auto text-center py-8">
+      <div class="container mx-auto text-center py-0 projects-title">
         <h2 class="mb-4">{{ .Title | markdownify }}</h2>
         <p class="text-sm">{{ .Params.description | markdownify }}</p>
       </div>

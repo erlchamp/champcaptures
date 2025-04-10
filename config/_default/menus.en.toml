@@ -21,9 +21,3 @@ name = "Projects"
 url = "/#projects"
 weight = 5
 
-# footer menu
-[[footer]]
-name = "About"
-url = "/#about"
-weight = 1
-

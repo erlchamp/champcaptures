@@ -1,7 +1,7 @@
 ---
 enable: true
 title: "Skills"
-description: "Don't just take our word for it - hear from some of our satisfied users!  Check out some of our testimonials below to see what others are saying about Hugoplate."
+description: "I’m passionate about the “everything as code” mindset—managing not just pipelines and monitoring but also the orchestration of Kubernetes clusters. I build and automate cloud platforms using infrastructure-as-code, so every part of the system is repeatable, scalable, and transparent. My approach combines modern DevOps practices with a focus on platform security and observability, ensuring that environments run smoothly and securely."
 
 # Testimonials
 skills:

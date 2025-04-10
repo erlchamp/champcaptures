@@ -1,9 +1,25 @@
+.banner-title {
+    font-family: 'Roboto', sans-serif !important;
+    /* Optional: override other properties if needed */
+    font-size: 2rem;
+    font-weight: 600;
+  }
+.skills-title h2 {
+    font-family: 'Roboto', sans-serif !important;
+    /* Optional: override other properties if needed */
+  }
+  
+.projects-title h2 {
+    font-family: 'Roboto', sans-serif !important;
+    /* Optional: override other properties if needed */
+  }
+
 /* Hide the logo text */
 .navbar-brand {
     display: none !important;
   }
   
-  /* Adjust the menu link font styling */
+/* Adjust the menu link font styling */
 #nav-menu .nav-link {
     font-size: 1.25rem;
     font-family: 'Roboto', sans-serif;
@@ -17,6 +33,10 @@
     }
   }
 
+header.header {
+    position: sticky !important;
+    top: 0 !important;
+  }
 
 header.header,
 header.header nav.navbar,
