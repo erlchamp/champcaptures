@@ -1,7 +1,7 @@
 ---
 enable: true
 title: "Projects"
-description: "Explore my creative and technical projects."
+description: ""
 projects:
   - title: "Photography Works"
     image: "/images/photographyworks.png"
