@@ -3,7 +3,7 @@
 banner:
   title: "I’m orchestrating automation and infrastructure to build resilient, scalable platforms as a DevOps and Platform Engineer."
   content: ""
-  image: "/images/banner-hk.png"
+  image: "/images/banner.png"
   button:
     enable: false
     label: "Get Started For Free"
