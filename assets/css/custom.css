@@ -1,8 +1,8 @@
 .banner-title {
     font-family: 'Roboto', sans-serif !important;
     /* Optional: override other properties if needed */
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 700;
   }
 .skills-title h2 {
     font-family: 'Roboto', sans-serif !important;
@@ -59,17 +59,4 @@ ul.navbar-nav {
   /* Optionally, add some spacing between the items */
   #nav-menu.navbar-nav li {
     margin-right: 1rem;
-  }
-
-/* When the checkbox is checked, show the nav menu on mobile screens */
-#nav-toggle:checked ~ ul#nav-menu {
-    display: block !important; /* overrides 'hidden' class */
-  }
-  
-  /* Hide the "show" icon when checked, show the "hide" icon instead */
-  #nav-toggle:checked + label #show-button {
-    display: none !important;
-  }
-  #nav-toggle:checked + label #hide-button {
-    display: block !important;
   }
