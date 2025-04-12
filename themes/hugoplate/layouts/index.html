@@ -99,31 +99,29 @@
 <!-- Skills -->
 {{ with site.GetPage "sections/skills" }}
   {{ if .Params.enable }}
-    <section id="skills" class="section">
-      <div class="container">
-        <!-- Section Title & Description -->
-        <div class="text-center mb-8 skills-title">
-          <h2 class="mb-2">
-            {{ .Title | markdownify }}
-          </h2>
-          <p class="text-sm">
-            {{ .Params.description | markdownify }}
-          </p>
-        </div>
+    <section id="skills" class="section p-0">
+      <!-- Centered heading in a container -->
+      <div class="container mx-auto text-center mb-8 px-4">
+        <h2 class="mb-2">{{ .Title | markdownify }}</h2>
+        <p class="text-sm">{{ .Params.description | markdownify }}</p>
+      </div>
 
-        <!-- Horizontal Flex Layout (Single Row) -->
-        <div class="flex flex-nowrap overflow-x-auto gap-2 justify-center items-start">
+      <!-- Horizontal scrollable row for skill boxes -->
+      <div class="overflow-x-auto w-full">
+        <!-- The flex container: horizontally scrollable and center-align items -->
+        <div class="flex flex-nowrap gap-3 justify-center items-start px-4 pb-4">
           {{ range .Params.skills }}
-            <div class="bg-white rounded-lg shadow-sm w-[200px] h-[220px] p-2 flex flex-col items-center">
+            <div class="bg-white rounded-lg shadow-sm w-[160px] sm:w-[200px] h-[220px] p-2 flex flex-col items-center">
               <!-- Icon/Image -->
               {{ if .image }}
                 <div class="mb-1">
                   {{ partial "image" (dict "Src" .image "Alt" .title "Size" "500x500") }}
                 </div>
               {{ end }}
+
               <!-- Text Container -->
               <div class="flex-1 flex items-center justify-center overflow-hidden text-center px-1">
-                <h3 class="text-sm font-semibold leading-tight break-words skills-title">
+                <h3 class="text-sm font-semibold leading-tight break-words">
                   {{ .title }}
                 </h3>
               </div>
