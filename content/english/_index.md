@@ -11,12 +11,12 @@ banner:
 
 intro:
   title: ""
-  content: ""
-  image: "/images/about.png"
+  content: |
+    {{< video src="/images/intro.mp4" width="100%" height="600" autoplay="true" loop="true" muted="true" playsinline="true" class="rounded-none" >}}
   button:
-    enable: false
-    label: "Get Started For Free"
-    link: ""
+  enable: false
+  label: "Get Started For Free"
+  link: ""
 
 # Features
 about:
