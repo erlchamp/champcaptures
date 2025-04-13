@@ -14,23 +14,21 @@
     });
   });
 
-  // Testimonial Slider
-  // ----------------------------------------
-  new Swiper(".testimonial-slider", {
-    spaceBetween: 24,
-    loop: true,
-    pagination: {
-      el: ".testimonial-slider-pagination",
-      type: "bullets",
-      clickable: true,
+// Skill Slider
+// ----------------------------------------
+new Swiper(".skills-slider", {
+  spaceBetween: 20,
+  loop: true,
+  slidesPerView: 4, // Default for mobile and small screens
+  pagination: {
+    el: ".skills-slider-pagination",
+    type: "bullets",
+    clickable: true,
+  },
+  breakpoints: {
+    992: {
+      slidesPerView: 7, // Larger screens show 5 slides
     },
-    breakpoints: {
-      768: {
-        slidesPerView: 2,
-      },
-      992: {
-        slidesPerView: 3,
-      },
-    },
-  });
+  },
+});
 })();

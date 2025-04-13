@@ -97,29 +97,24 @@
 <!-- /About -->
 
 <!-- Skills -->
-{{ with site.GetPage "sections/skills" }}
+<!-- {{ with site.GetPage "sections/skills" }}
   {{ if .Params.enable }}
     <section id="skills" class="section p-0">
       <div class="container mx-auto px-4">
-        <!-- Section Title & Description -->
         <div class="text-center mb-8 skills-title">
           <h2 class="mb-2">{{ .Title | markdownify }}</h2>
           <p class="text-sm">{{ .Params.description | markdownify }}</p>
         </div>
 
-        <!-- Horizontal scrollable row for skill boxes -->
         <div class="overflow-x-auto w-full">
-          <!-- Flex container aligned to the left -->
           <div class="flex flex-nowrap gap-3 justify-start items-start">
             {{ range .Params.skills }}
               <div class="bg-white rounded-lg shadow-sm w-[160px] sm:w-[200px] h-[220px] p-2 flex flex-col items-center">
-                <!-- Icon/Image -->
                 {{ if .image }}
                   <div class="mb-1">
                     {{ partial "image" (dict "Src" .image "Alt" .title "Size" "500x500") }}
                   </div>
                 {{ end }}
-                <!-- Text Container -->
                 <div class="flex-1 flex items-center justify-center overflow-hidden text-center px-1">
                   <h3 class="text-sm font-semibold leading-tight break-words">
                     {{ .title }}
@@ -132,8 +127,49 @@
       </div>
     </section>
   {{ end }}
+{{ end }} -->
+<!-- /Skills -->
+
+<!-- Skills -->
+{{ with site.GetPage "sections/skills" }}
+  {{ if .Params.enable }}
+    <section id="skills" class="section py-4">
+      <div class="container">
+        <div class="row">
+          <div class="md:col-10 lg:col-10 xl:col-10 mx-auto mb-7 text-center skills-title">
+            <h2 class="mb-4">
+              {{ .Title | markdownify }}
+            </h2>
+            <p class="text-sm">
+              {{ .Params.description | markdownify }}
+            </p>
+          </div>
+          <div class="col-12">
+            <div class="swiper skills-slider">
+              <div class="swiper-wrapper">
+                {{ range .Params.skills }}
+                  <div class="swiper-slide">
+                    <div class="rounded-lg px-4 py-5 text-center">
+                      {{ if .image }}
+                        {{ partial "image" (dict "Src" .image "Alt" .title "Size" "200x200" "Class" "mx-auto") }}
+                      {{ end }}
+                      <h3 class="mt-2 text-sm font-primary font-semibold">
+                        {{ .title | markdownify }}
+                      </h3>
+                    </div>
+                  </div>
+                {{ end }}
+              </div>
+              <div class="skills-slider-pagination mt-9 flex items-center justify-center text-center"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {{ end }}
 {{ end }}
 <!-- /Skills -->
+
 <!-- Projects -->
 {{ with site.GetPage "sections/projects" }}
   {{ if .Params.enable }}
