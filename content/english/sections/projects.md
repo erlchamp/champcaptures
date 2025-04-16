@@ -9,7 +9,7 @@ projects:
     overlayImage: "/images/photography_overlay.png"
   - title: "Tech Stuff"
     image: "/images/techstuff.png"
-    link: "/tech-stuff"
+    link: "/blog"
     overlayImage: "/images/tech_overlay.png"
 _build:
   render: "never"
