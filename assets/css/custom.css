@@ -60,3 +60,31 @@ ul.navbar-nav {
   #nav-menu.navbar-nav li {
     margin-right: 1rem;
   }
+
+.h2 {
+  font-family: 'Roboto', sans-serif; /* Replace with your desired font */
+  font-size: 2.5rem; /* Adjust the size as needed */
+  font-weight: 700; /* Adjust the weight as needed */
+  color: #333; /* Adjust the color as needed */
+  }
+/* Change the font for the blog listing page title */
+/* Style the blog post titles */
+h4.mb-3 a {
+  font-family: 'Roboto', sans-serif; /* Replace with your desired font */
+  font-size: 1.5rem; /* Adjust the size as needed */
+  font-weight: 700; /* Adjust the weight as needed */
+  color: #333; /* Adjust the color as needed */
+  text-decoration: none; /* Remove underline if needed */
+}
+
+h4.mb-3 a:hover {
+  color: #007bff; /* Change color on hover */
+}
+/* Target the <h1> tag inside the blog listing page */
+section .container h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+}
