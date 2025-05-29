@@ -1,19 +1,20 @@
 {{ define "main" }}
-  <section class="section">
-    <div class="container mx-auto px-4">
-      <div class="mb-8">
-        <h1 class="text-h1 font-bold">{{ .Title }}</h1>
-        {{ if .Params.description }}
-          <p class="mt-2 text-lg text-text">{{ .Params.description }}</p>
-        {{ end }}
-      </div>
-
-      <!-- Breadcrumb navigation -->
-      <nav class="text-sm text-gray-500 mb-6">
-        <a href="{{ site.BaseURL }}" class="text-primary hover:underline">Home</a> / {{ .Title }}
+  <section class="section py-8">
+    <div class="container mx-auto px-4 text-center">
+      <!-- Simple sub-nav -->
+      <nav class="inline-flex space-x-4 mb-8">
+        <a href="{{ .Site.BaseURL }}portfolio/" class="underline">Gallery</a>
+        <a href="{{ .Site.BaseURL }}portfolio/albums/" class="underline">Albums</a>
       </nav>
 
-      <div class="content prose max-w-none">
+      <!-- Title & Description -->
+      <h1 class="text-h1 font-bold mb-4">{{ .Title }}</h1>
+      {{ with .Params.description }}
+        <p class="mb-6">{{ . }}</p>
+      {{ end }}
+
+      <!-- Your actual content -->
+      <div class="prose max-w-none">
         {{ .Content }}
       </div>
     </div>
