@@ -1,25 +1,22 @@
 {{ define "main" }}
   {{ partial "page-header" . }}
-
   <section class="section">
     <div class="container">
-      <div class="row">
-        {{ range .RegularPages }}   {{/* leaf bundles = each album */}}
-          <div class="md:col-6 mb-12">
-            <a href="{{ .RelPermalink }}" class="block group">
-              {{ with .Params.image }}
-                {{ partial "image" (dict "Src" . "Alt" $.Title
-                                    "Class" "w-full h-48 object-cover rounded mb-4") }}
-              {{ end }}
-              <h3 class="text-xl font-semibold group-hover:text-primary">
-                {{ .Title }}
-              </h3>
-              {{ with .Params.description }}
-                <p class="text-sm text-text">{{ . }}</p>
-              {{ end }}
-            </a>
+      <div class="row gx-5">
+        <div class="lg:col-8">
+          <div class="row">
+            {{ range .Sections }}
+              <div class="md:col-6 mb-14">
+                {{ partial "components/album-card" . }}
+              </div>
+            {{ end }}
+            {{ range .RegularPages }}
+              <div class="md:col-6 mb-14">
+                {{ partial "components/album-card" . }}
+              </div>
+            {{ end }}
           </div>
-        {{ end }}
+        </div>
       </div>
     </div>
   </section>
