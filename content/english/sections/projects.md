@@ -5,7 +5,7 @@ description: ""
 projects:
   - title: "Photography Works"
     image: "/images/photographyworks.png"
-    link: "/blog"
+    link: "/portfolio"
     overlayImage: "/images/photography_overlay.png"
   - title: "Tech Stuff"
     image: "/images/techstuff.png"

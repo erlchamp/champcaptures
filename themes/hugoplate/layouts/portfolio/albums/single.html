@@ -1,0 +1,26 @@
+{{ define "main" }}
+  {{ partial "page-header" . }}
+  <section class="section py-10">
+    <div class="container mx-auto px-4">
+      <div class="row justify-center">
+        <article class="lg:col-10">
+          {{ with .Params.image }}
+            <div class="mb-8">
+              {{ partial "image" (dict 
+                  "Src" . 
+                  "Alt" $.Title 
+                  "Class" "w-full rounded-lg"
+                  "DisplayXL" "960x600"
+              ) }}
+            </div>
+          {{ end }}
+          <h1 class="h2 mb-4">{{ .Title }}</h1>
+          <!-- Remove the .content wrapper, let Hugo render raw Markdown/shortcodes -->
+          <div style="max-width: none; padding: 0;">
+            {{ .Content | safeHTML }}
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+{{ end }}

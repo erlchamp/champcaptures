@@ -1,0 +1,22 @@
+{{ define "main" }}
+  <section class="section py-8">
+    <div class="container mx-auto px-4 text-center">
+
+      <nav class="inline-flex space-x-4 mb-8">
+        <a href="{{ .Site.BaseURL }}portfolio/" class="underline {{ if eq .RelPermalink "/portfolio/" }}font-bold{{ end }}">Gallery</a>
+        <a href="{{ .Site.BaseURL }}portfolio/albums/" class="underline {{ if eq .RelPermalink "/portfolio/albums/" }}font-bold{{ end }}">Albums</a>
+      </nav>
+
+      <!-- Title & description -->
+      <h1 class="text-h1 font-bold mb-4">{{ .Title }}</h1>
+      {{ with .Params.description }}
+        <p class="mb-6">{{ . }}</p>
+      {{ end }}
+
+      <!-- Body content -->
+      <div class="prose max-w-none">
+        {{ .Content }}
+      </div>
+    </div>
+  </section>
+{{ end }}
