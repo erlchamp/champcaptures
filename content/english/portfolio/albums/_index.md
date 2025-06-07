@@ -12,4 +12,4 @@ description: "Browse the complete collection of photo stories."
      class="mx-auto block"
      height=""
      width=""
-     webp="false" >}}](/portfolio/albums/mothercare/)
+     webp="false" >}}](/portfolio/albums/mothercare/mothercare-1)
