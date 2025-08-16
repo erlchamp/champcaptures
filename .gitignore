@@ -1,4 +1,6 @@
 /resources/_gen/
 .DS_Store
 hugo_stats.json
-/public/
+/public/node_modules/
+node_modules/
+public/
