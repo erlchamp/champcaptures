@@ -24,7 +24,7 @@ jobs:
           node-version: "20"
 
       - name: Install Snyk CLI
-        uses: snyk/actions/setup@v4
+        uses: snyk/actions/setup@0.4.0
 
       # --- SCA (Open Source) ---
       # For npm projects, Snyk can auto-detect manifest; if you need dev deps, add --dev
@@ -75,7 +75,7 @@ jobs:
           tags: champoi/champcaptures:${{ github.sha }}
       
       - name: Install Snyk CLI
-        uses: snyk/actions/setup@v4
+        uses: snyk/actions/setup@0.4.0
 
       # Scan the image; point to your Dockerfile to improve accuracy
       - name: Snyk Container
