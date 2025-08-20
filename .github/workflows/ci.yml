@@ -109,8 +109,6 @@ jobs:
               "hidden-focusable": "warn",
               "empty-heading": "warn",
               "attribute-allowed-values": "warn",
-              
-              // previously failing rules we want to soften for now
               "no-raw-characters": "warn",
               "unique-landmark": "warn",
               "no-autoplay": "off",
@@ -124,8 +122,8 @@ jobs:
             ],
             "root": true,
             "ignore": [
-              "public/elements/**",        
-              "public/blog/page/**"        
+              "public/elements/**",
+              "public/blog/page/**"
             ]
           }
           JSON
@@ -138,11 +136,9 @@ jobs:
       - name: Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
         with:
-          configPath: .lighthouserc.json
+          configPath: lighthouserc.json
           uploadArtifacts: true
           runs: 1
-          # Serve the built site folder
-          staticDistDir: public
 
       # Dockerfile best-practices (hadolint) – quick lint
       - name: Dockerfile lint (hadolint)
