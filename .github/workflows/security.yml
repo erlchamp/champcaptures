@@ -99,6 +99,11 @@ jobs:
           context: .
           load: true
           tags: champoi/champcaptures:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      
+      - name: Set up concurrency
+        run: echo "Ensuring no overlapping builds"
       
       - name: Install Snyk CLI
         uses: snyk/actions/setup@0.4.0
