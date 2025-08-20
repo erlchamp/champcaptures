@@ -65,11 +65,17 @@ jobs:
                --printPathWarnings \
                --panicOnWarning
 
+      - name: Serve built site
+        run: |
+          npx --yes http-server public -p 4321 >/dev/null 2>&1 &
+          # wait until the server is up
+          timeout 20 bash -c 'until curl -fsS http://127.0.0.1:4321 >/dev/null; do sleep 1; done'
+          echo "LYCHEE_URL=http://127.0.0.1:4321" >> $GITHUB_ENV
+
       # Markdown link & HTTP link checking (Lychee)
       - name: Link check with lychee
         uses: lycheeverse/lychee-action@v2
         with:
-          # Check both the repo content (markdown) and the generated site
           args: >-
             --no-progress
             --verbose
@@ -77,7 +83,7 @@ jobs:
             --accept 200,206,429
             --max-retries 2
             --timeout 20
-            . public
+            ${{ env.LYCHEE_URL }}
           output: lychee_report.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
