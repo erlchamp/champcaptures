@@ -96,11 +96,25 @@ jobs:
           path: lychee_report.md
 
       # HTML validation (optional but nice). Simple tool via npx.
+      - name: Write html-validate config
+        run: |
+          cat > .htmlvalidate.json <<'JSON'
+          {
+            "extends": ["html-validate:recommended"],
+            "rules": {
+              "attr-quotes": "off",
+              "doctype-style": "off",
+              "no-inline-style": "warn",
+              "no-implicit-button-type": "warn",
+              "hidden-focusable": "warn",
+              "empty-heading": "warn",
+              "attribute-allowed-values": "warn"
+            }
+          }
+          JSON
       - name: HTML validate (relaxed)
         run: |
-          npx --yes html-validate \
-            --rules 'attr-quotes: off, doctype-style: off, no-inline-style: warn, no-implicit-button-type: warn, hidden-focusable: warn, empty-heading: warn, attribute-allowed-values: warn' \
-            "public/**/*.html"
+          npx --yes html-validate "public/**/*.html"
 
       # Accessibility/perf smoke via Lighthouse CI (headless)
       - name: Lighthouse CI
