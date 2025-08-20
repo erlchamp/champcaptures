@@ -73,7 +73,6 @@ jobs:
           args: >-
             --no-progress
             --verbose
-            --exclude-mail
             --max-concurrency 10
             --accept 200,206,429
             --max-retries 2
