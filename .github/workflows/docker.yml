@@ -20,13 +20,41 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          install: true
+          driver: docker-container
+
+      # Build the image locally (loads into Docker) so Snyk can scan THIS artifact
+      - name: Build image (for scan)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: champoi/champcaptures:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Install Snyk CLI
+        uses: snyk/actions/setup@0.4.0
+
+      - name: Snyk Container Scan
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          snyk container test champoi/champcaptures:${{ github.sha }} \
+            --file=Dockerfile \
+            --severity-threshold=high
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      # Push only after scan has passed
+      - name: Build & Push image (on scan pass)
         uses: docker/build-push-action@v6
         with:
           context: .
