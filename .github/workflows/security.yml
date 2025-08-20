@@ -7,6 +7,14 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Optional: set to your platform repo in org/name format (e.g., champoi/platform)
+  PLATFORM_REPO: ""
+
 permissions:
   contents: read
   security-events: write   # for SARIF upload
@@ -17,6 +25,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Checkout platform repo (optional)
+        if: ${{ env.PLATFORM_REPO != '' }}
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.PLATFORM_REPO }}
+          path: _platform
+          token: ${{ secrets.GH_CI_TOKEN }}
 
       - name: Setup Node for Snyk CLI (optional, but common)
         uses: actions/setup-node@v4
@@ -35,6 +51,14 @@ jobs:
           # Scan only the Node/NPM project to produce a single SARIF run (GitHub no longer accepts multiple runs per category)
           snyk test --severity-threshold=high --package-manager=npm --sarif-file-output=sca.sarif
 
+      # --- IaC (Terraform, K8s, Helm) ---
+      - name: Snyk IaC (platform repo)
+        if: ${{ env.PLATFORM_REPO != '' }}
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          snyk iac test _platform --severity-threshold=high --sarif-file-output=iac.sarif
+
       # --- SAST (Snyk Code) optional ---
       - name: Snyk Code (SAST) - optional
         if: ${{ false }}  # flip to true if you enable Snyk Code in org
@@ -50,6 +74,7 @@ jobs:
           sarif_file: sca.sarif
           category: snyk-sca
       - name: Upload SARIF - IaC
+        if: ${{ env.PLATFORM_REPO != '' }}
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: iac.sarif
