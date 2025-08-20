@@ -32,7 +32,8 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          snyk test --severity-threshold=high --all-projects --sarif-file-output=sca.sarif
+          # Scan only the Node/NPM project to produce a single SARIF run (GitHub no longer accepts multiple runs per category)
+          snyk test --severity-threshold=high --package-manager=npm --sarif-file-output=sca.sarif
 
       # --- SAST (Snyk Code) optional ---
       - name: Snyk Code (SAST) - optional
