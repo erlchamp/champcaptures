@@ -1,0 +1,166 @@
+name: CI (Hugo Tests)
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'content/**'
+      - 'layouts/**'
+      - 'assets/**'
+      - 'static/**'
+      - 'themes/**'
+      - 'config.*'
+      - 'hugo.*'
+      - 'package*.json'
+      - 'Dockerfile'
+      - 'ops/nginx/**'
+      - '.lighthouserc.json'
+      - '.github/workflows/ci.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  hugo_build_and_checks:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Go (for Hugo Modules)
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.x'
+          cache: true
+
+      # Hugo (extended) – easiest via peaceiris action
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.141.0"
+          extended: true
+
+      # Node setup (for any theme/tooling + link/lint tools)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - name: Install npm deps (if package.json exists)
+        run: |
+          if [ -f package.json ]; then npm ci; else echo "No package.json"; fi
+
+      # Build site (fail on warnings you care about)
+      - name: Build Hugo site
+        env:
+          HUGO_ENV: production
+        run: |
+          hugo --minify --gc \
+               --printI18nWarnings \
+               --printPathWarnings \
+               --panicOnWarning
+
+      - name: Serve built site
+        run: |
+          npx --yes http-server public -p 4321 >/dev/null 2>&1 &
+          # wait until the server is up
+          timeout 20 bash -c 'until curl -fsS http://127.0.0.1:4321 >/dev/null; do sleep 1; done'
+          echo "LYCHEE_URL=http://127.0.0.1:4321" >> $GITHUB_ENV
+
+      # Markdown link & HTTP link checking (Lychee)
+      - name: Link check with lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --verbose
+            --max-concurrency 10
+            --accept 200,206,429
+            --max-retries 2
+            --timeout 20
+            ${{ env.LYCHEE_URL }}
+          output: lychee_report.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload link-check report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lychee-report
+          path: lychee_report.md
+
+      # HTML validation (optional but nice). Simple tool via npx.
+      - name: Write html-validate config
+        run: |
+          cat > .htmlvalidate.json <<'JSON'
+          {
+            "extends": ["html-validate:recommended"],
+            "rules": {
+              "attr-quotes": "off",
+              "doctype-style": "off",
+              "no-inline-style": "warn",
+              "no-implicit-button-type": "warn",
+              "hidden-focusable": "warn",
+              "empty-heading": "warn",
+              "attribute-allowed-values": "warn",
+              "no-raw-characters": "warn",
+              "unique-landmark": "warn",
+              "no-autoplay": "off",
+              "wcag/h30": "warn",
+              "no-implicit-close": "off",
+              "close-order": "off",
+              "element-required-content": "off"
+            },
+            "elements": [
+              "html5"
+            ],
+            "root": true
+          }
+          JSON
+      - name: HTML validate (relaxed)
+        continue-on-error: true
+        run: |
+          npx --yes html-validate \
+            "public/**/*.html" \
+            "!public/elements/**" \
+            "!public/blog/page/**"
+
+      # Accessibility/perf smoke via Lighthouse CI (headless)
+      - name: Write Lighthouse config
+        run: |
+          cat > lighthouserc.json <<'JSON'
+          {
+            "ci": {
+              "collect": {
+                "staticDistDir": "public",
+                "numberOfRuns": 1
+              },
+              "assert": {
+                "assertions": {
+                  "categories:performance": ["warn", {"minScore": 0.80}],
+                  "categories:accessibility": ["warn", {"minScore": 0.90}],
+                  "categories:best-practices": ["warn", {"minScore": 0.90}]
+                }
+              }
+            }
+          }
+          JSON
+      - name: Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: lighthouserc.json
+          uploadArtifacts: true
+          runs: 1
+
+      # Dockerfile best-practices (hadolint) – quick lint
+      - name: Dockerfile lint (hadolint)
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+          failure-threshold: error

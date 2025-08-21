@@ -15,19 +15,24 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PATH="/usr/local/go/bin:${PATH}" \
     HUGO_ENV=production
 
+# hadolint ignore=DL3008,DL3015
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates curl wget git tar xz-utils nodejs npm \
  && rm -rf /var/lib/apt/lists/*
 
 # Install Hugo Extended
-RUN wget -O /tmp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
- && apt-get update && apt-get install -y /tmp/hugo.deb \
- && rm -f /tmp/hugo.deb
+RUN set -eux; \
+    wget --progress=dot:giga -O /tmp/hugo.deb "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"; \
+    apt-get update; \
+    apt-get install -y /tmp/hugo.deb; \
+    rm -f /tmp/hugo.deb; \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Go (for Hugo Modules)
-RUN wget -O /tmp/go.tar.gz https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz \
- && tar -C /usr/local -xzf /tmp/go.tar.gz \
- && rm -f /tmp/go.tar.gz
+RUN set -eux; \
+    wget --progress=dot:giga -O /tmp/go.tar.gz "https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz"; \
+    tar -C /usr/local -xzf /tmp/go.tar.gz; \
+    rm -f /tmp/go.tar.gz
 
 WORKDIR /src
 # Install NPM deps first for better layer caching
@@ -38,10 +43,9 @@ COPY . .
 
 # If you have a setup script (as in your GH Actions): 
 # this usually pulls themes, sets up modules, copies assets, etc.
-RUN npm run project-setup
-
-# Build the static site (you can also call `hugo --minify` directly)
-RUN npm run build
+RUN set -eux; \
+    npm run project-setup; \
+    npm run build
 # Result goes to /src/public
 
 # ---- runtime stage (non-root nginx on 8080) ---------------------------------
