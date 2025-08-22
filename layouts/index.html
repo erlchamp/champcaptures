@@ -205,7 +205,7 @@
       <!-- Projects Grid (two columns) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-0 w-full">
         {{ range .Params.projects }}
-          <div class="relative w-full" style="padding-top: 62.5%;">
+          <div class="relative w-full pt-[62.5%]">
             <!-- 62.5% = (600 / 960) * 100, preserving an 8:5 aspect ratio -->
 
             <a href="{{ .link | absURL }}" class="group block w-full h-full absolute inset-0">
