@@ -127,7 +127,7 @@ jobs:
         continue-on-error: true
         run: |
           echo -e "public/elements/**\npublic/blog/page/**" > .htmlvalidateignore
-          npx --yes html-validate --ignore-path .htmlvalidateignore "public/**/*.html"
+          npx --yes html-validate "public/**/*.html"
 
       # Accessibility/perf smoke via Lighthouse CI (headless)
       - name: Write Lighthouse config
