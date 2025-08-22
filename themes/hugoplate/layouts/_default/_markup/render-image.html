@@ -1,0 +1,5 @@
+{{/* layouts/_default/_markup/render-image.html */}}
+{{ $alt := .Text | plainify }}
+<img src="{{ .Destination | safeURL }}"
+     alt="{{ $alt }}"
+     class="w-100 h-auto">
