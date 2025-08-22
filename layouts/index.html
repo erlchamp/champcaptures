@@ -1,0 +1,250 @@
+{{ define "main" }}
+  <!-- Banner -->
+  {{ with .Params.banner }}
+    <section class="section p-0">
+      <!-- Full-width banner image -->
+      <div class="w-full">
+        {{ partial "image" (dict "Src" .image "Alt" "Banner image" "Loading" "eager" "Class" "w-full" "DisplayXL" "1920x900" ) }}
+      </div>
+      <!-- Banner content below -->
+      <div class="container mx-auto text-center pt-8 pb-0">
+        <h1 class="mb-2 text-base lg:text-lg banner-title">
+          {{ if .title }}
+            {{ .title | markdownify }}
+          {{ else }}
+            <span class="sr-only">Home</span>
+          {{ end }}
+        </h1>
+        <p class="mb-0">
+          {{ .content | markdownify }}
+        </p>
+        {{ with .button }}
+          {{ if .enable }}
+            <a class="btn btn-primary" href="{{ .link | absURL }}"
+               {{ if strings.HasPrefix .link `http` }} target="_blank" rel="noopener" {{ end }}>
+              {{ .label }}
+              <i class="fa fa-arrow-right pl-2"></i>
+            </a>
+          {{ end }}
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+  <!-- /Banner -->
+
+<!-- Intro -->
+{{ with .Params.intro }}
+  <section class="section p-0">
+    <!-- Full-width video (stored in .content) -->
+    <div class="w-full">
+      {{ .content | markdownify }}
+    </div>
+    
+    <!-- Intro text below the video -->
+    <div class="container mx-auto text-center py-4">
+      <h1 class="mb-0 text-h3 lg:text-h1">
+        {{ if .title }}
+          {{ .title | markdownify }}
+        {{ else }}
+          <span class="sr-only">{{ $.Title | default site.Title }}</span>
+        {{ end }}
+      </h1>
+      {{ with .button }}
+        {{ if .enable }}
+          <a
+            class="btn btn-primary"
+            href="{{ .link | absURL }}"
+            {{ if strings.HasPrefix .link `http` }} target="_blank" rel="noopener" {{ end }}
+          >
+            {{ .label }}
+            <i class="fa fa-arrow-right pl-2"></i>
+          </a>
+        {{ end }}
+      {{ end }}
+    </div>
+  </section>
+{{ end }}
+<!-- /Intro -->
+
+<!-- About -->
+{{ with index .Params.about 0 }}
+  <section id="about" class="section p-0 {{ if (modBool 0 2) }}bg-gradient{{ end }}">
+    <!-- Full-width feature image -->
+    <div class="w-full">
+      {{ partial "image" (dict "Src" .image "Alt" "Feature image" "Loading" "eager" "Class" "w-full" "DisplayXL" "1920x600") }}
+    </div>
+    <!-- Feature content below the image -->
+    <div class="container mx-auto text-center py-0">
+      <h2 class="mb-4 text-h3 lg:text-h1">
+        {{ if .title }}
+          {{ .title | markdownify }}
+        {{ else }}
+          <span class="sr-only">About</span>
+        {{ end }}
+      </h2>
+      <p class="mb-8 text-lg">
+        {{ .content | markdownify }}
+      </p>
+      {{ with .bulletpoints }}
+        <ul class="text-left mx-auto max-w-2xl">
+          {{ range . }}
+            <li class="relative mb-4 pl-6">
+              <i class="fa fa-check absolute left-0 top-1.5"></i>
+              {{ . | markdownify }}
+            </li>
+          {{ end }}
+        </ul>
+      {{ end }}
+      {{ with .button }}
+        {{ if .enable }}
+          <a class="btn btn-primary mt-6" href="{{ .link | absURL }}">
+            {{ .label }}
+            <i class="fa fa-arrow-right pl-2"></i>
+          </a>
+        {{ end }}
+      {{ end }}
+    </div>
+  </section>
+{{ end }}
+<!-- /About -->
+
+<!-- Skills -->
+<!-- {{ with site.GetPage "sections/skills" }}
+  {{ if .Params.enable }}
+    <section id="skills" class="section p-0">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-8 skills-title">
+          <h2 class="mb-2">{{ .Title | markdownify }}</h2>
+          <p class="text-sm">{{ .Params.description | markdownify }}</p>
+        </div>
+
+        <div class="overflow-x-auto w-full">
+          <div class="flex flex-nowrap gap-3 justify-start items-start">
+            {{ range .Params.skills }}
+              <div class="bg-white rounded-lg shadow-sm w-[160px] sm:w-[200px] h-[220px] p-2 flex flex-col items-center">
+                {{ if .image }}
+                  <div class="mb-1">
+                    {{ partial "image" (dict "Src" .image "Alt" .title "Size" "500x500") }}
+                  </div>
+                {{ end }}
+                <div class="flex-1 flex items-center justify-center overflow-hidden text-center px-1">
+                  <h3 class="text-sm font-semibold leading-tight break-words">
+                    {{ .title }}
+                  </h3>
+                </div>
+              </div>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    </section>
+  {{ end }}
+{{ end }} -->
+<!-- /Skills -->
+
+<!-- Skills -->
+{{ with site.GetPage "sections/skills" }}
+  {{ if .Params.enable }}
+    <section id="skills" class="section py-4">
+      <div class="container">
+        <div class="row">
+          <div class="md:col-10 lg:col-10 xl:col-10 mx-auto mb-7 text-center skills-title">
+            <h2 class="mb-4">
+              {{ if .Title }}
+                {{ .Title | markdownify }}
+              {{ else }}
+                <span class="sr-only">Skills</span>
+              {{ end }}
+            </h2>
+            <p class="text-sm">
+              {{ .Params.description | markdownify }}
+            </p>
+          </div>
+          <div class="col-12">
+            <div class="swiper skills-slider">
+              <div class="swiper-wrapper">
+                {{ range .Params.skills }}
+                  <div class="swiper-slide">
+                    <div class="rounded-lg px-4 py-5 text-center">
+                      {{ if .image }}
+                        {{ partial "image" (dict "Src" .image "Alt" .title "Size" "200x200" "Class" "mx-auto") }}
+                      {{ end }}
+                      <h3 class="mt-2 text-sm font-primary font-semibold">
+                        {{ .title | markdownify }}
+                      </h3>
+                    </div>
+                  </div>
+                {{ end }}
+              </div>
+              <div class="skills-slider-pagination mt-9 flex items-center justify-center text-center"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {{ end }}
+{{ end }}
+<!-- /Skills -->
+
+<!-- Projects -->
+{{ with site.GetPage "sections/projects" }}
+  {{ if .Params.enable }}
+    <section id="projects" class="section p-0">
+      <!-- Title + Description -->
+      <div class="container mx-auto text-center pt-10 pb-0 projects-title">
+        <h2 class="mb-4">
+          {{ if .Title }}
+            {{ .Title | markdownify }}
+          {{ else }}
+            <span class="sr-only">Projects</span>
+          {{ end }}
+        </h2>
+        <p class="text-sm">{{ .Params.description | markdownify }}</p>
+      </div>
+
+      <!-- Projects Grid (two columns) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-0 w-full">
+        {{ range .Params.projects }}
+          <div class="relative w-full" style="padding-top: 62.5%;">
+            <!-- 62.5% = (600 / 960) * 100, preserving an 8:5 aspect ratio -->
+
+            <a href="{{ .link | absURL }}" class="group block w-full h-full absolute inset-0">
+              <!-- Base Image (using your "image" partial) -->
+              {{ partial "image" (dict 
+                  "Src" .image 
+                  "Alt" .title 
+                  "Loading" "eager"
+                  "Class" "w-full h-full object-cover"
+                  "DisplayXL" "960x600"
+              ) }}
+
+              <!-- Hover overlay -->
+              <div
+                class="absolute inset-0 opacity-0 group-hover:opacity-100
+                       transition duration-300 ease-in-out
+                       flex items-center justify-center"
+              >
+                {{ if .overlayImage }}
+                  {{ partial "image" (dict 
+                      "Src" .overlayImage 
+                      "Alt" .title 
+                      "Loading" "eager"
+                      "Class" "w-full h-full object-cover"
+                      "DisplayXL" "960x600"
+                  ) }}
+                {{ else }}
+                  <span class="text-white text-2xl font-bold">
+                    {{ .title | markdownify }}
+                  </span>
+                {{ end }}
+              </div>
+            </a>
+          </div>
+        {{ end }}
+      </div>
+    </section>
+  {{ end }}
+{{ end }}
+<!-- /Projects -->
+
+{{ end }}
