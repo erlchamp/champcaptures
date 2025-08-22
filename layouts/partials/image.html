@@ -1,0 +1,11 @@
+{{/* layouts/partials/image.html */}}
+{{ $src := .Src }}
+{{ $alt := .Alt | default "" }}
+{{ $class := .Class | default "w-full h-auto" }}
+
+<img
+  src="{{ $src | safeURL }}"
+  alt="{{ $alt }}"
+  class="{{ $class }}"
+  loading="lazy"
+  decoding="async">

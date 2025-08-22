@@ -1,5 +1,5 @@
 <header class="header {{ if site.Params.navbar_fixed }}sticky top-0{{ end }} z-30">
-  <nav class="navbar container">
+  <nav class="navbar container" aria-label="Main">
     <!-- Logo -->
     <div class="order-0">
       <a class="navbar-brand block" href="{{ site.Home.RelPermalink }}">
@@ -12,7 +12,10 @@
     <!-- Label that toggles the menu when clicked -->
     <label
       for="nav-toggle"
-      class="order-3 cursor-pointer flex items-center lg:hidden text-text-dark dark:text-white lg:order-1">
+      class="order-3 cursor-pointer flex items-center lg:hidden text-text-dark dark:text-white lg:order-1"
+      aria-label="Toggle navigation"
+      aria-controls="nav-menu"
+      aria-expanded="false">
 
       <!-- Show (Open) Button -->
       <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
@@ -102,7 +105,7 @@
     <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
       {{ with site.Params.search }}
         {{ if .enable }}
-          <button
+          <button type="button"
             aria-label="search"
             class="border-border text-text-dark hover:text-primary
                    dark:border-darkmode-border mr-5 inline-block border-r pr-5
