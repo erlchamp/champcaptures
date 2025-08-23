@@ -1,237 +1,127 @@
-<h1 align="center">Hugo + Tailwind CSS Starter and Boilerplate</h1>
+<h1 align="center">ChampCaptures - Photography Portfolio</h1>
 
-<p align="center">Hugoplate is a free starter template built with Hugo, and Tailwind CSS v4.0, providing everything you need to jumpstart your Hugo project and save valuable time.</p>
+<p align="center">A modern, performant photography portfolio built with Hugo and Tailwind CSS, featuring a robust CI/CD pipeline and optimized image hosting.</p>
 
-<p align="center">Made with ♥ by <a href="https://zeon.studio/"> Zeon Studio</a></p>
-<p align=center> If you find this project useful, please give it a ⭐ to show your support.</p>
+---
 
-<h2 align="center"> <a target="_blank" href="https://zeon.studio/preview?project=hugoplate" rel="nofollow">👀 Demo</a> | <a  target="_blank" href="https://pagespeed.web.dev/analysis/https-hugoplate-netlify-app/6lyxjw6t4r?form_factor=desktop">Page Speed (95+)🚀</a>
-</h2>
+## 📸 Project Purpose
 
-<p align="center">
-  <a href="https://github.com/gohugoio/hugo/releases/tag/v0.126.0" alt="Contributors">
-    <img src="https://img.shields.io/static/v1?label=min-HUGO-version&message=0.126.0&color=f00&logo=hugo" />
-  </a>
+ChampCaptures is a photography portfolio designed to showcase high-quality images with an elegant and responsive design. Built using Hugo and Tailwind CSS, this project focuses on performance, security, and scalability, leveraging modern cloud infrastructure and automated workflows.
 
-  <a href="https://github.com/zeon-studio/hugoplate/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/zeon-studio/hugoplate" alt="license">
-  </a>
+---
 
-  <a href="https://github.com/zeon-studio/hugoplate">
-    <img src="https://img.shields.io/github/languages/code-size/zeon-studio/hugoplate" alt="code size">
-  </a>
+## 🛠 Tech Stack
 
-  <a href="https://github.com/zeon-studio/hugoplate/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/zeon-studio/hugoplate" alt="contributors">
-  </a>
-</p>
+- **Static Site Generator:** [Hugo](https://gohugo.io/)
+- **CSS Framework:** [Tailwind CSS v4.0](https://tailwindcss.com/)
+- **Web Server:** NGINX (for local development and future deployment)
+- **Containerization:** Docker
+- **Cloud & Hosting:** Google Kubernetes Engine (GKE), Google Cloud Storage (GCS) + CDN (`cdn.erloumiguel.com`)
+- **CI/CD:** GitHub Actions workflows (`ci.yml`, `security.yml`, `docker.yml`)
+- **Security & Quality Tools:** Snyk, Hadolint, Lighthouse, html-validate, Lychee (image link checker)
 
-## 🎁 What's Included
+---
 
-We have included almost everything you need to start your Hugo project. Let's see what's included in this template:
+## ☁️ Image Hosting Migration
 
-### 📌 Key Features
+All images are hosted on Google Cloud Storage and served via a CDN at `cdn.erloumiguel.com` to ensure fast delivery and scalability. This migration improves site performance and reliability compared to local hosting.
 
-- 👥 Multi-Authors
-- 🎯 Similar Posts Suggestion
-- 🔍 Search Functionality
-- 🌑 Dark Mode
-- 🏷️ Tags & Categories
-- 🔗 Netlify setting pre-configured
-- 📞 Support contact form
-- 📱 Fully responsive
-- 📝 Write and update content in Markdown
-- 💬 Disqus Comment
-- 🔳 Syntax Highlighting
+---
 
-### 📄 15+ Pre-designed Pages
+## ⚙️ CI/CD Workflows
 
-- 🏠 Homepage
-- 👤 About
-- 📞 Contact
-- 👥 Authors
-- 👤 Author Single
-- 📝 Blog
-- 📝 Blog Single
-- 🚫 Custom 404
-- 💡 Elements
-- 📄 Privacy Policy
-- 🏷️ Tags
-- 🏷️ Tag Single
-- 🗂️ Categories
-- 🗂️ Category Single
-- 🔍 Search
+- **ci.yml:** Runs Hugo build, HTML validation, Lighthouse audits, and image link validation with Lychee.
+- **security.yml:** Performs container image security scans using Snyk and Hadolint.
+- **docker.yml:** Builds and pushes Docker images for deployment.
 
-### 📦 Tech Stack
+This automated pipeline ensures code quality, security, and smooth deployments.
 
-- [Hugo](https://gohugo.io/)
-- [Tailwind CSS v4.0](https://tailwindcss.com/)
-- [AutoPrefixer](https://autoprefixer.github.io/)
-- [Hugo Modules](https://gohugo.io/hugo-modules/) by [Gethugothemes](https://gethugothemes.com/hugo-modules)
-- [Markdown](https://markdownguide.org/)
-- [Prettier](https://prettier.io/)
-- [Jshint](https://jshint.com/)
-- [Netlify](https://www.netlify.com/)
-- [Vercel](https://vercel.com/)
-- [Github Actions](https://github.com/features/actions)
-- [Gitlab Ci](https://docs.gitlab.com/ee/ci/)
-- [AWS Amplify](https://aws.amazon.com/amplify/)
+---
+
+## 📦 Repository Layout
+
+- `assets/images/` — Stores local images used in the site before migration to CDN.
+- `content/english/portfolio/` — Markdown content for portfolio items.
+- `layouts/` — Hugo templates and partials, including CDN rewrite partials for image URLs.
+- `.github/workflows/` — GitHub Actions workflows for CI/CD and security checks.
 
 ---
 
 ## 🚀 Getting Started
 
-First you need to [clone](https://github.com/zeon-studio/hugoplate) or [download](https://github.com/zeon-studio/hugoplate/archive/refs/heads/main.zip) the template repository, and then let's get started with the following process:
+To get the project up and running locally, follow these steps:
 
-### ⚙️ Prerequisites
-
-To start using this template, you need to have some prerequisites installed on your machine.
+### Prerequisites
 
 - [Hugo Extended v0.144+](https://gohugo.io/installation/)
-- [Node v22+](https://nodejs.org/en/download/)
+- [Node.js v22+](https://nodejs.org/en/download/)
 - [Go v1.24+](https://go.dev/doc/install)
 
-### 👉 Project Setup
+### Setup
 
-We build this custom script to make your project setup easier. It will create a new Hugo theme folder, and clone the Hugoplate theme into it. Then move the exampleSite folder into the root directory. So that you can start your Hugo server without going into the exampleSite folder. Use the following command to setup your project.
+1. Clone the repository:
 
 ```bash
-npm run project-setup
+git clone https://github.com/yourusername/champcaptures.git
+cd champcaptures
 ```
 
-### 👉 Install Dependencies
-
-Install all the dependencies using the following command.
+2. Install dependencies:
 
 ```bash
 npm install
 ```
 
-### 👉 Development Command
-
-Start the development server using the following command.
+3. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-### 🎬 Still Confused? Watch a Quick Video
-
-https://github.com/zeon-studio/hugoplate/assets/58769763/c260c0ae-91be-42ce-b8db-aa7f11f777bd
-
----
-
-## 📝 Customization
-
-This template has been designed with a lot of customization options in mind. You can customize almost anything you want, including:
-
-### 👉 Site Config
-
-You can change the site title, base URL, language, theme, plugins, and more from the `hugo.toml` file.
-
-### 👉 Site Params
-
-You can customize all the parameters from the `config/_default/params.toml` file. This includes the logo, favicon, search, SEO metadata, and more.
-
-### 👉 Colors and Fonts
-
-You can change the colors and fonts from the `data/theme.json` file. This includes the primary color, secondary color, font family, and font size.
-
-### 👉 Social Links
-
-You can change the social links from the `data/social.json` file. Add your social links here, and they will automatically be displayed on the site.
-
----
-
-## 🛠 Advanced Usage
-
-We have added some custom scripts to make your life easier. You can use these scripts to help you with your development.
-
-### 👉 Update Theme
-
-If you want to update the theme, then you can use the following command. It will update the theme to the latest version.
-
-```bash
-npm run update-theme
-```
-
-> **Note:** This command will work after running `project-setup` script.
-
-### 👉 Update Modules
-
-We have added a lot of modules to this template. You can update all the modules using the following command.
-
-```bash
-npm run update-modules
-```
-
-### 👉 Remove Dark Mode
-
-If you want to remove dark mode from your project, you can use the following command to remove dark mode from your project.
-
-```bash
-npm run remove-darkmode
-```
-
-> **Note:** This command will work before running `project-setup` script. If you already run the `project-setup` command, then you have to run `npm run theme-setup` first, and then you can run this command. afterward, you can run `npm run project-setup` again.
-
----
-
-## 🚀 Build And Deploy
-
-After you finish your development, you can build or deploy your project almost everywhere. Let's see the process:
-
-### 👉 Build Command
-
-To build your project locally, you can use the following command.
+4. Build the static site:
 
 ```bash
 npm run build
 ```
 
-### 👉 Deploy Site
+---
 
-We have provided 5 different deploy platform configurations with this template, so you can deploy easily.
+## 🎨 Customization
 
-- [Netlify](https://www.netlify.com/)
-- [Vercel](https://vercel.com/)
-- [Github Actions](https://github.com/features/actions)
-- [Gitlab Ci](https://docs.gitlab.com/ee/ci/)
-- [AWS Amplify](https://aws.amazon.com/amplify/)
+You can customize the site through the following configurations:
 
-And if you want to Host some other hosting platforms. then you can build your project, and you will get a `public` folder. that you can copy and paste on your hosting platform.
-
-> **Note:** You must change the `baseURL` in the `hugo.toml` file. Otherwise, your site will not work properly.
+- **Site Config:** Modify `hugo.toml` to change site title, base URL, language, theme, and plugins.
+- **Site Params:** Adjust parameters in `config/_default/params.toml` such as logo, favicon, SEO metadata, and search settings.
+- **Colors and Fonts:** Edit `data/theme.json` to update primary/secondary colors, font families, and sizes.
+- **Social Links:** Manage social media links in `data/social.json` to display on the site.
 
 ---
 
-## 🔒 Guide to Staying Compliant
+## 📦 Deployment Flow
 
-### 🐞 Reporting Issues
+The deployment process follows this flow:
 
-We use GitHub Issues as the official bug tracker for this Template. Please Search [existing issues](https://github.com/zeon-studio/hugoplate/issues). It’s possible someone has already reported the same problem.
-If your problem or idea has not been addressed yet, feel free to [open a new issue](https://github.com/zeon-studio/hugoplate/issues).
-
-### 📝 License
-
-Copyright (c) 2023 - Present, Designed & Developed by [Zeon Studio](https://zeon.studio/)
-
-**Code License:** Released under the [MIT](https://github.com/zeon-studio/hugoplate/blob/main/LICENSE) license.
-
-**Image license:** The images are only for demonstration purposes. They have their license, we don't have permission to share those images.
+1. **Push changes** to the repository.
+2. **CI tests** run: Hugo build, HTML validation, Lighthouse audits, and Lychee image checks.
+3. **Security scans** execute via Snyk and Hadolint.
+4. **Docker image** is built and pushed if tests pass.
+5. **Deployment** triggered (currently to GitHub Pages; future plans include GKE).
 
 ---
 
-## 🖼️ Showcase
+## 📝 Notes
 
-List of some projects people are building with **Hugoplate**!
-
-| [![Open Neuromorphic](https://tinyurl.com/hp7avtje)](https://open-neuromorphic.org/) | [![AI Models](https://tinyurl.com/mu4p7dhb)](https://aimodels.org/) | [![Hugobricks](https://tinyurl.com/4x3uwhm9)](https://www.hugobricks.preview.usecue.com/) | [![ONO LLC](https://tinyurl.com/2fbjzwzn)](https://ono.day/)
-|:---:|:---:|:---:|:---:|
-| **Open Neuromorphic** | **AI Models** | **Hugobricks** | **ONO LLC** |
+- All images must reside in `assets/images` before being migrated to the CDN.
+- Use the CDN rewrite partials in Hugo templates to serve images from `cdn.erloumiguel.com`.
+- DNS and SSL for `erloumiguel.com` are managed by GitHub Pages.
+- DNS and SSL for `cdn.erloumiguel.com` are handled via Google Cloud Platform.
 
 ---
 
-## 💻 Need Customization?
+## 📜 License
 
-If you need a custom theme, theme customization, or complete website development services from scratch you can [Hire Us](https://zeon.studio/estimate-project).
+This project is based on the [Hugoplate](https://github.com/zeon-studio/hugoplate) starter template, which is released under the MIT license. ChampCaptures is a customized and extended version tailored specifically for photography portfolio needs.
+
+---
+
+Thank you for exploring ChampCaptures! For questions or contributions, please open an issue or submit a pull request.
