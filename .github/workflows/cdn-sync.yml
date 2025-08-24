@@ -68,15 +68,15 @@ jobs:
           GCS_URI="gs://${GCS_BUCKET}/${DEST_PREFIX}"
 
           IMAGE_EXTENSIONS="jpg jpeg png webp avif gif svg"
-          IMAGE_PATTERNS=""
+          IMAGE_PATTERNS=()
 
           for ext in $IMAGE_EXTENSIONS; do
-            IMAGE_PATTERNS="${IMAGE_PATTERNS} \"${GCS_URI}/**/*.${ext}\""
+            IMAGE_PATTERNS+=("${GCS_URI}/**/*.${ext}")
           done
 
-          eval gsutil -m setmeta \
+          gsutil -m setmeta \
             -h "Cache-Control:public, max-age=31536000, immutable" \
-            $IMAGE_PATTERNS || true
+            "${IMAGE_PATTERNS[@]}" || true
 
       # Optional: short cache for JSON/webmanifest (if you add any later)
       - name: Set short cache for JSON/manifest (optional)
