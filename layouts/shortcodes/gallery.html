@@ -1,0 +1,16 @@
+{{/* layouts/shortcodes/gallery.html */}}
+{{- $dir  := .Get "dir" | default "images/gallery" -}}
+{{- $cdn  := site.Params.cdn_base | default "" -}}
+{{- $imgs := resources.Match (printf "%s/*" $dir) -}}
+<div class="masonry">
+  {{- range $imgs -}}
+    {{- $name := path.Base .Name -}}
+    {{- $rel := printf "%s/%s" (strings.TrimLeft "/" $dir) $name -}}
+    {{- $url := cond (ne $cdn "") (printf "%s/%s" (strings.TrimRight "/" $cdn) $rel) (printf "/%s" $rel) -}}
+    <div class="masonry-item">
+      <a href="{{ $url }}" target="_blank" rel="noopener">
+        <img src="{{ $url }}" alt="{{ $name }}" loading="lazy" decoding="async" class="w-full h-auto rounded">
+      </a>
+    </div>
+  {{- end -}}
+</div>
