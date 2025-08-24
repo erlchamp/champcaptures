@@ -1,12 +1,12 @@
 <h1 align="center">ChampCaptures - Photography Portfolio</h1>
 
-<p align="center">A modern, performant photography portfolio built with Hugo and Tailwind CSS, featuring a robust CI/CD pipeline and optimized image hosting.</p>
+<p align="center">A personal portfolio built with Hugo and Tailwind CSS, featuring a robust CI/CD pipeline and optimized image hosting.</p>
 
 ---
 
 ## 📸 Project Purpose
 
-ChampCaptures is a photography portfolio designed to showcase high-quality images with an elegant and responsive design. Built using Hugo and Tailwind CSS, this project focuses on performance, security, and scalability, leveraging modern cloud infrastructure and automated workflows.
+ChampCaptures is a personal portfolio designed to showcase high-quality images with an elegant and responsive design. Built using Hugo and Tailwind CSS, this project focuses on performance, security, and scalability, leveraging modern cloud infrastructure and automated workflows.
 
 ---
 
@@ -120,7 +120,7 @@ The deployment process follows this flow:
 
 ## 📜 License
 
-This project is based on the [Hugoplate](https://github.com/zeon-studio/hugoplate) starter template, which is released under the MIT license. ChampCaptures is a customized and extended version tailored specifically for photography portfolio needs.
+This project is based on the [Hugoplate](https://github.com/zeon-studio/hugoplate) starter template, which is released under the MIT license. ChampCaptures is a customized and extended version tailored specifically for personal use.
 
 ---
 
