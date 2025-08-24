@@ -90,8 +90,21 @@ section .container h1 {
 }
 
 .masonry {
-  column-count: 3;       /* adjust for screen size */
+  column-width: 300px;   /* responsive column width */
   column-gap: 1rem;
+}
+
+/* Responsive adjustments for masonry columns */
+@media (max-width: 900px) {
+  .masonry {
+    column-width: 200px;
+  }
+}
+@media (max-width: 600px) {
+  .masonry {
+    column-count: 1;
+    column-width: auto;
+  }
 }
 .masonry-item {
   break-inside: avoid;
