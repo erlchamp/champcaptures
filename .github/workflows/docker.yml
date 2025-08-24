@@ -40,6 +40,10 @@ jobs:
           workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
           service_account: ${{ secrets.GCP_SA_EMAIL }}
 
+      - name: Debug secrets fallback condition
+        run: |
+          echo "GCP_WIF_PROVIDER='${{ secrets.GCP_WIF_PROVIDER }}'"
+          echo "GCP_SA_EMAIL='${{ secrets.GCP_SA_EMAIL }}'"
       - name: Auth with Service Account JSON (fallback)
         if: ${{ secrets.GCP_WIF_PROVIDER == '' || secrets.GCP_SA_EMAIL == '' }}
         uses: google-github-actions/auth@v2
