@@ -1,5 +1,9 @@
 name: Build & Push Docker Image
 
+env:
+  GCP_WIF_PROVIDER: ${{ secrets.GCP_WIF_PROVIDER }}
+  GCP_SA_EMAIL: ${{ secrets.GCP_SA_EMAIL }}
+
 on:
   workflow_run:
     workflows: ["Security (Snyk)"]
@@ -29,14 +33,14 @@ jobs:
 
       # --- Auth to GCP (pick ONE automatically based on available secrets) ---
       - name: Auth with Workload Identity Federation
-        if: ${{ secrets.GCP_WIF_PROVIDER && secrets.GCP_SA_EMAIL }}
+        if: ${{ env.GCP_WIF_PROVIDER != '' && env.GCP_SA_EMAIL != '' }}
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
           service_account: ${{ secrets.GCP_SA_EMAIL }}
 
       - name: Auth with Service Account JSON (fallback)
-        if: ${{ !secrets.GCP_WIF_PROVIDER || !secrets.GCP_SA_EMAIL }}
+        if: ${{ env.GCP_WIF_PROVIDER == '' || env.GCP_SA_EMAIL == '' }}
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
