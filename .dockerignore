@@ -5,3 +5,12 @@ public
 resources
 .DS_Store
 *.log
+
+# Local images (already synced to GCS)
+assets/images
+
+# VSCode settings
+.vscode
+
+# Hugo cache
+hugo_stats.json
