@@ -29,7 +29,7 @@ jobs:
 
       # (A) Workload Identity Federation (recommended)
       - name: Auth with WIF
-        if: ${{ env.GCP_WIF_PROVIDER != '' && env.GCP_SA_EMAIL != '' }}
+        if: ${{ secrets.GCP_WIF_PROVIDER != '' && secrets.GCP_SA_EMAIL != '' }}
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
@@ -37,7 +37,7 @@ jobs:
 
       # (B) Service Account JSON (fallback)
       - name: Auth with SA key (fallback)
-        if: ${{ env.GCP_WIF_PROVIDER == '' || env.GCP_SA_EMAIL == '' }}
+        if: ${{ secrets.GCP_WIF_PROVIDER == '' || secrets.GCP_SA_EMAIL == '' }}
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
