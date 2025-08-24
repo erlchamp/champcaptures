@@ -2,16 +2,15 @@
 {{- $dir  := .Get "dir" | default "images/gallery" -}}
 {{- $cdn  := site.Params.cdn_base | default "" -}}
 {{- $imgs := resources.Match (printf "%s/*" $dir) -}}
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="masonry">
   {{- range $imgs -}}
-    {{- /* Ensure we only use the base filename (no accidental subpaths) */ -}}
     {{- $name := path.Base .Name -}}
-    {{- /* Normalized relative path like "images/gallery/DSC00726.jpg" */ -}}
     {{- $rel := printf "%s/%s" (strings.TrimLeft "/" $dir) $name -}}
-    {{- /* Build final URL: cdn_base + rel, or site-relative if cdn_base not set */ -}}
     {{- $url := cond (ne $cdn "") (printf "%s/%s" (strings.TrimRight "/" $cdn) $rel) (printf "/%s" $rel) -}}
-    <a href="{{ $url }}" target="_blank" rel="noopener">
-      <img src="{{ $url }}" alt="{{ $name }}" loading="lazy" decoding="async" class="w-full h-auto rounded">
-    </a>
+    <div class="masonry-item">
+      <a href="{{ $url }}" target="_blank" rel="noopener">
+        <img src="{{ $url }}" alt="{{ $name }}" loading="lazy" decoding="async" class="w-full h-auto rounded">
+      </a>
+    </div>
   {{- end -}}
 </div>

@@ -1,0 +1,20 @@
+{{/* layouts/partials/image.html */}}
+{{- $cdn := site.Params.cdn_base | default "" -}}
+{{- $src := .Src | default "" -}}
+{{- $alt := .Alt | default "" -}}
+{{- $class := .Class | default "" -}}
+{{- $width := .Width -}}
+{{- $height := .Height -}}
+
+{{- $isAbs := or (hasPrefix $src "http://") (hasPrefix $src "https://") -}}
+{{- $isData := hasPrefix $src "data:" -}}
+{{- $norm := cond (or $isAbs $isData) $src (printf "/%s" (strings.TrimLeft "/" $src)) -}}
+{{- $final := cond (and (ne $cdn "") (not $isAbs) (not $isData)) (printf "%s/%s" (strings.TrimRight "/" $cdn) (strings.TrimLeft "/" $norm)) $norm -}}
+
+<img src="{{ $final }}"
+     alt="{{ $alt }}"
+     {{ with $width }}width="{{ . }}"{{ end }}
+     {{ with $height }}height="{{ . }}"{{ end }}
+     loading="lazy"
+     decoding="async"
+     class="{{ $class }}" />
