@@ -28,6 +28,14 @@ jobs:
       # --- Auth to GCP (pick ONE of the two blocks below) ---
 
       # (A) Workload Identity Federation (recommended)
+      - name: Debug WIF env
+        run: |
+          if [[ -n "${GCP_WIF_PROVIDER}" && -n "${GCP_SA_EMAIL}" ]]; then
+            echo "WIF env vars are set."
+          else
+            echo "WIF env vars are NOT set. GCP_WIF_PROVIDER='${GCP_WIF_PROVIDER}' GCP_SA_EMAIL='${GCP_SA_EMAIL}'"
+          fi
+
       - name: Auth with WIF
         if: ${{ env.GCP_WIF_PROVIDER != '' && env.GCP_SA_EMAIL != '' }}
         uses: google-github-actions/auth@v2

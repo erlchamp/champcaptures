@@ -32,20 +32,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # --- Detect Auth Method ---
+      - name: Detect Auth Method
+        run: |
+          echo "Checking if WIF-related environment variables are set (without exposing values):"
+          echo "GCP_WIF_PROVIDER is ${GCP_WIF_PROVIDER:+set}"
+          echo "GCP_SA_EMAIL is ${GCP_SA_EMAIL:+set}"
+
       # --- Auth to GCP (pick ONE automatically based on available secrets) ---
       - name: Auth with Workload Identity Federation
-        if: ${{ secrets.GCP_WIF_PROVIDER != '' && secrets.GCP_SA_EMAIL != '' }}
+        if: ${{ env.GCP_WIF_PROVIDER != '' && env.GCP_SA_EMAIL != '' }}
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
-          service_account: ${{ secrets.GCP_SA_EMAIL }}
+          workload_identity_provider: ${{ env.GCP_WIF_PROVIDER }}
+          service_account: ${{ env.GCP_SA_EMAIL }}
 
-      - name: Debug secrets fallback condition
-        run: |
-          echo "GCP_WIF_PROVIDER='${{ secrets.GCP_WIF_PROVIDER }}'"
-          echo "GCP_SA_EMAIL='${{ secrets.GCP_SA_EMAIL }}'"
       - name: Auth with Service Account JSON (fallback)
-        if: ${{ secrets.GCP_WIF_PROVIDER == '' || secrets.GCP_SA_EMAIL == '' }}
+        if: ${{ env.GCP_WIF_PROVIDER == '' || env.GCP_SA_EMAIL == '' }}
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
