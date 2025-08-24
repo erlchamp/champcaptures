@@ -66,12 +66,17 @@ jobs:
         run: |
           set -euo pipefail
           GCS_URI="gs://${GCS_BUCKET}/${DEST_PREFIX}"
-          # Apply to common image types. Adjust/extend as needed.
-          gsutil -m setmeta \
+
+          IMAGE_EXTENSIONS="jpg jpeg png webp avif gif svg"
+          IMAGE_PATTERNS=""
+
+          for ext in $IMAGE_EXTENSIONS; do
+            IMAGE_PATTERNS="${IMAGE_PATTERNS} \"${GCS_URI}/**/*.${ext}\""
+          done
+
+          eval gsutil -m setmeta \
             -h "Cache-Control:public, max-age=31536000, immutable" \
-            "${GCS_URI}/**/*.jpg" "${GCS_URI}/**/*.jpeg" "${GCS_URI}/**/*.png" \
-            "${GCS_URI}/**/*.webp" "${GCS_URI}/**/*.avif" "${GCS_URI}/**/*.gif" \
-            "${GCS_URI}/**/*.svg" || true
+            $IMAGE_PATTERNS || true
 
       # Optional: short cache for JSON/webmanifest (if you add any later)
       - name: Set short cache for JSON/manifest (optional)
