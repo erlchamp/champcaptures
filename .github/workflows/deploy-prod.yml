@@ -1,0 +1,30 @@
+name: deploy-prod
+on:
+  workflow_run:
+    workflows: ["Build & Push Docker Image"]     # must match the name: of docker.yml
+    types: [completed]
+
+concurrency:
+  group: cd-prod
+  cancel-in-progress: true
+
+jobs:
+  set-image-tag:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # checkout the same commit ref of the triggering run
+          ref: ${{ github.event.workflow_run.head_branch }}
+
+      - name: Update prod overlay image tag
+        working-directory: k8s/overlays/prod
+        run: |
+          kustomize edit set image docker.io/champoi/champcaptures=docker.io/champoi/champcaptures:${{ github.event.workflow_run.head_sha }}
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git commit -am "deploy(prod): ${{ github.event.workflow_run.head_sha }}" || echo "No changes"
+          git push
