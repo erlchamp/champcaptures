@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: champcaptures
+  namespace: web
+spec:
+  template:
+    metadata:
+      annotations:
+        gremlin.com/service-id: champcaptures
+        gremlin.com/tags: env=prod,team=platform
