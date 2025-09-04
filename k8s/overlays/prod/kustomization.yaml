@@ -10,4 +10,4 @@ patchesStrategicMerge:
   - patch-gremlin-service-annotations.yaml
 images:
   - name: docker.io/champoi/champcaptures
-    newTag: 22b1cf0b5e9dd258b81f198e881e1f2e9c3c5494
+    newTag: e3f7b917fc968803c57b2959795864fa3ecddae6
