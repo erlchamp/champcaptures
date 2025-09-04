@@ -13,12 +13,19 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           # checkout the same commit ref of the triggering run
+          fetch-depth: 0
           ref: ${{ github.event.workflow_run.head_branch }}
+
+      - name: Setup kustomize
+        uses: imranismail/setup-kustomize@v3
+        with:
+          kustomize-version: '5.4.1'
 
       - name: Update prod overlay image tag
         working-directory: k8s/overlays/prod
@@ -26,5 +33,19 @@ jobs:
           kustomize edit set image docker.io/champoi/champcaptures=docker.io/champoi/champcaptures:${{ github.event.workflow_run.head_sha }}
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git commit -am "deploy(prod): ${{ github.event.workflow_run.head_sha }}" || echo "No changes"
-          git push
+
+      - name: Create Pull Request for prod deploy
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "deploy(prod): ${{ github.event.workflow_run.head_sha }}"
+          title: "deploy(prod): ${{ github.event.workflow_run.head_sha }}"
+          body: |
+            Promote image to prod
+            Triggered by Build & Push Docker Image run ${{ github.event.workflow_run.id }}.
+          branch: "ci/deploy-prod-${{ github.run_id }}"
+          base: ${{ github.event.workflow_run.head_branch }}
+          add-paths: |
+            k8s/overlays/prod/kustomization.yaml
+          labels: |
+            cd
+            prod
