@@ -1,13 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 namespace: web
-
 resources:
   - ../../base
   - rollout.yaml
-
 patchesStrategicMerge:
   - patch-gremlin-serviceid.yaml
 images:
-  newTag: 057a5cc18da10a0c622dd034ce99f21ff185c4d2
+  - name: docker.io/champoi/champcaptures
+    newTag: 22b1cf0b5e9dd258b81f198e881e1f2e9c3c5494
