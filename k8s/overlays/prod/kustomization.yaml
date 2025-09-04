@@ -4,7 +4,11 @@ kind: Kustomization
 namespace: web
 
 resources:
-  - ../../base
-  - rollout.yaml
+- ../../base
+- rollout.yaml
 patches:
-  - path: patch-gremlin-serviceid.yaml
+- path: patch-gremlin-serviceid.yaml
+images:
+- name: docker.io/champoi/champcaptures
+  newName: docker.io/champoi/champcaptures
+  newTag: 3ff4d097ce402ede0cb268544eaf6f603a1e783c
