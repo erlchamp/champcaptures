@@ -6,5 +6,6 @@ namespace: web
 resources:
   - ../../base
   - rollout.yaml
-patches:
-  - path: patch-gremlin-serviceid.yaml
+
+patchesStrategicMerge:
+  - patch-gremlin-serviceid.yaml
