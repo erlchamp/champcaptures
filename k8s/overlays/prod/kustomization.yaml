@@ -4,10 +4,10 @@ kind: Kustomization
 namespace: web
 
 resources:
-- ../../base
-- rollout.yaml
+  - ../../base
+  - rollout.yaml
 
 patchesStrategicMerge:
-- patch-gremlin-serviceid.yaml
+  - patch-gremlin-serviceid.yaml
 images:
   newTag: 057a5cc18da10a0c622dd034ce99f21ff185c4d2
