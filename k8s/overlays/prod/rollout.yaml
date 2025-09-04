@@ -5,6 +5,8 @@ metadata:
   labels: { app: champcaptures }
 spec:
   replicas: 3
+  revisionHistoryLimit: 3
+  progressDeadlineSeconds: 600
   selector:
     matchLabels: { app: champcaptures }
   template:
@@ -20,7 +22,7 @@ spec:
           image: docker.io/champoi/champcaptures:latest
           ports: [{ containerPort: 8080 }]
           readinessProbe:
-            httpGet: { path: /healthz, port: 8080 }
+            httpGet: { path: /healthz, port: 8080 }   # ensure /healthz exists in the container
             initialDelaySeconds: 5
           livenessProbe:
             httpGet: { path: /healthz, port: 8080 }
