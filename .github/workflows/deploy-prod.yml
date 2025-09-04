@@ -35,15 +35,23 @@ jobs:
           NEW_TAG: ${{ github.event.workflow_run.head_sha }}
         run: |
           set -euo pipefail
-          # Ensure .images exists as a list
-          yq -i '.images = (.images // [])' kustomization.yaml
-          # If the image exists, update its tag; otherwise append a new entry
-          # Use -e to make no-match return non-zero so the else branch runs on empty lists
+          # If .images exists but is NOT a sequence (list), normalize it to an empty list.
+          yq -i '
+            if has("images") and ((.images | type) != "!!seq") then
+              del(.images)
+            else .
+            end
+            | .images = (.images // [])
+          ' kustomization.yaml
+
+          # If the image exists, update its tag; otherwise append a new entry.
+          # Use -e so "no match" returns non-zero and we go to the else branch.
           if yq -e '.images[] | select(.name == "docker.io/champoi/champcaptures")' kustomization.yaml >/dev/null 2>&1; then
             yq -i '(.images[] | select(.name=="docker.io/champoi/champcaptures").newTag) = strenv(NEW_TAG)' kustomization.yaml
           else
             yq -i '.images += [{"name":"docker.io/champoi/champcaptures","newTag":env(NEW_TAG)}]' kustomization.yaml
           fi
+
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
 
