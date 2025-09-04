@@ -36,18 +36,26 @@ jobs:
         run: |
           set -euo pipefail
 
-          # 1) If .images exists but is NOT a sequence (list), delete it.
-          yq -i 'if has("images") and (.images | type != "!!seq") then del(.images) else . end' kustomization.yaml
+          # 1) If .images exists and is NOT a sequence (list), delete it.
+          if yq -e 'has("images")' kustomization.yaml >/dev/null 2>&1; then
+            if ! yq -e '.images | type == "!!seq"' kustomization.yaml >/dev/null 2>&1; then
+              yq -i 'del(.images)' kustomization.yaml
+            fi
+          fi
 
           # 2) Ensure .images exists as an array
           yq -i '.images = (.images // [])' kustomization.yaml
 
-          # 3) Update existing entry or append a new one (use -e so no-match => non-zero exit)
+          # 3) Update existing entry or append a new one
           if yq -e '.images[] | select(.name == "docker.io/champoi/champcaptures")' kustomization.yaml >/dev/null 2>&1; then
             yq -i '(.images[] | select(.name=="docker.io/champoi/champcaptures").newTag) = strenv(NEW_TAG)' kustomization.yaml
           else
             yq -i '.images += [{"name":"docker.io/champoi/champcaptures","newTag":env(NEW_TAG)}]' kustomization.yaml
           fi
+
+          # Optional: show result in logs
+          echo "----- kustomization.yaml (images) -----"
+          yq '.images' kustomization.yaml
 
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
@@ -67,3 +75,5 @@ jobs:
           labels: |
             cd
             prod
+          # If your org blocks PRs by GITHUB_TOKEN, uncomment the next line and add a PAT in repo secrets:
+          # token: ${{ secrets.BOT_TOKEN }}
