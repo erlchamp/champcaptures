@@ -1,4 +1,4 @@
-name: deploy-prod
+name: Deploy-Prod
 on:
   workflow_run:
     workflows: ["Build & Push Docker Image"]     # must match the name: of docker.yml
@@ -60,7 +60,13 @@ jobs:
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
 
+      - name: Check if there are changes
+        id: git_diff
+        run: |
+          git diff --quiet k8s/overlays/prod/kustomization.yaml || echo "changed=true" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request for prod deploy
+        if: steps.git_diff.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: "deploy(prod): ${{ github.event.workflow_run.head_sha }}"
@@ -75,5 +81,3 @@ jobs:
           labels: |
             cd
             prod
-          # If your org blocks PRs by GITHUB_TOKEN, uncomment the next line and add a PAT in repo secrets:
-          # token: ${{ secrets.BOT_TOKEN }}
