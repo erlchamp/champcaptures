@@ -7,4 +7,4 @@ spec:
     metadata:
       annotations:
         gremlin.com/service-id: champcaptures
-        gremlin.com/tags: env=prod,team=platform
+        gremlin.com/tags: environment:prod,team:platform

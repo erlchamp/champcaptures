@@ -6,6 +6,8 @@ resources:
   - rollout.yaml
 patchesStrategicMerge:
   - patch-gremlin-serviceid.yaml
+  - patch-gremlin-rollout-metadata.yaml
+  - patch-gremlin-service-annotations.yaml
 images:
   - name: docker.io/champoi/champcaptures
     newTag: 22b1cf0b5e9dd258b81f198e881e1f2e9c3c5494
