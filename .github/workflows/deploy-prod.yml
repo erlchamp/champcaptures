@@ -1,7 +1,7 @@
 name: deploy-prod
 on:
   workflow_run:
-    workflows: ["Build & Push Docker Image"]     # must match the name: of docker.yml
+    workflows: ["Build & Push Docker Image"]
     types: [completed]
 
 concurrency:
@@ -18,23 +18,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # checkout the same commit ref of the triggering run
           fetch-depth: 0
-          ref: ${{ github.event.workflow_run.head_branch }}
+          ref: ${{ github.event.workflow_run.head_sha }}   # ← pin to the built commit
 
-      - name: Install kustomize
+      - name: Install yq
         run: |
-          VERSION="v5.4.1"
-          URL="https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${VERSION}/kustomize_${VERSION}_linux_amd64.tar.gz"
-          curl -sSL "$URL" -o kustomize.tgz
-          tar -xzf kustomize.tgz
-          sudo mv kustomize /usr/local/bin/kustomize
-          kustomize version
+          YQ_VERSION="v4.44.2"
+          sudo wget -qO /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64"
+          sudo chmod +x /usr/local/bin/yq
+          yq --version
 
-      - name: Update prod overlay image tag
+      - name: Update prod overlay image tag (yq)
         working-directory: k8s/overlays/prod
+        env:
+          NEW_TAG: ${{ github.event.workflow_run.head_sha }}
         run: |
-          kustomize edit set image docker.io/champoi/champcaptures=docker.io/champoi/champcaptures:${{ github.event.workflow_run.head_sha }}
+          set -euo pipefail
+          yq -i '.images = (.images // [])' kustomization.yaml
+          if yq '.images[] | select(.name == "docker.io/champoi/champcaptures")' kustomization.yaml >/dev/null 2>&1; then
+            yq -i '(.images[] | select(.name=="docker.io/champoi/champcaptures").newTag) = strenv(NEW_TAG)' kustomization.yaml
+          else
+            yq -i '.images += [{"name":"docker.io/champoi/champcaptures","newTag":env(NEW_TAG)}]' kustomization.yaml
+          fi
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
 
@@ -47,7 +52,7 @@ jobs:
             Promote image to prod
             Triggered by Build & Push Docker Image run ${{ github.event.workflow_run.id }}.
           branch: "ci/deploy-prod-${{ github.run_id }}"
-          base: ${{ github.event.workflow_run.head_branch }}
+          base: main                              # ← target prod branch
           add-paths: |
             k8s/overlays/prod/kustomization.yaml
           labels: |
