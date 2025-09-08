@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: web
 resources:
   - ../../base
-  - rollout.yaml
 images:
   - name: docker.io/champoi/champcaptures
     newTag: latest   # CI will set this to ${GIT_SHA} for prod

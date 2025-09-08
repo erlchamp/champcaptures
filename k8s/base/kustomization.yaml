@@ -7,4 +7,5 @@ labels:               # ← replace commonLabels with labels
       app: champcaptures
 
 resources:
+  - deployment.yaml
   - service.yaml

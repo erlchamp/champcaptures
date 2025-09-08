@@ -3,11 +3,25 @@ kind: Kustomization
 namespace: web
 resources:
   - ../../base
-  - rollout.yaml
-patchesStrategicMerge:
-  - patch-gremlin-serviceid.yaml
-  - patch-gremlin-rollout-metadata.yaml
-  - patch-gremlin-service-annotations.yaml
+patches:
+  - path: patch-gremlin-deployment-metadata.yaml
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: champcaptures
+  - path: patch-gremlin-serviceid.yaml
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: champcaptures
+  - path: patch-gremlin-service-annotations.yaml
+    target:
+      group: ""
+      version: v1
+      kind: Service
+      name: champcaptures
 images:
   - name: docker.io/champoi/champcaptures
     newTag: e3f7b917fc968803c57b2959795864fa3ecddae6
