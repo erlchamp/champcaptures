@@ -24,4 +24,4 @@ patches:
       name: champcaptures
 images:
   - name: docker.io/champoi/champcaptures
-    newTag: e3f7b917fc968803c57b2959795864fa3ecddae6
+    newTag: 4f08a284befe40418bcd6ba50bfa35ce9b0f5629
