@@ -1,9 +1,0 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Deployment
-metadata:
-  name: champcaptures
-  annotations:
-    gremlin.com/service-id: champcaptures
-    gremlin.com/tags: environment:prod,team:platform
-    # Optional only if you manage multiple Gremlin teams:
-    # gremlin.com/team-id: <your-team-id>

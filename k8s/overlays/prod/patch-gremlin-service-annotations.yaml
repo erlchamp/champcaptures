@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: champcaptures
-  annotations:
-    gremlin.com/service-id: champcaptures
-    gremlin.com/tags: environment:prod,team:platform

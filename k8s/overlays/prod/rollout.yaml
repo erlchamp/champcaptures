@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: champcaptures
+  labels:
+    app: champcaptures
+spec:
+  replicas: 3
+  revisionHistoryLimit: 3
+  progressDeadlineSeconds: 600
+  selector:
+    matchLabels:
+      app: champcaptures
+  template:
+    metadata:
+      labels:
+        app: champcaptures
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: web
+          image: docker.io/champoi/champcaptures:e3f7b917fc968803c57b2959795864fa3ecddae6
+          ports: [{ containerPort: 8080 }]
+          readinessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            initialDelaySeconds: 5
+          livenessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            initialDelaySeconds: 15
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: ["ALL"] }
+            runAsNonRoot: true
+
+  strategy:
+    canary:
+      trafficRouting: {}   # (optional) fill in if you add ingress/gateway later
+      steps:
+        # 10% → guardrails → manual gate
+        - setWeight: 10
+        - analysis:
+            templates:
+              - templateName: at-canary-guardrails
+        - pause: { duration: 2m }   # approval gate (promote when happy)
+
+        # 50% → guardrails → manual gate
+        - setWeight: 50
+        - analysis:
+            templates:
+              - templateName: at-canary-guardrails
+        - pause: { duration: 5m }   # approval gate (stress checkpoint if you later add Workflow)
+
+        # Full
+        - setWeight: 100
