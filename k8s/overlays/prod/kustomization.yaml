@@ -6,4 +6,4 @@ resources:
   - rollout.yaml
 images:
   - name: docker.io/champoi/champcaptures
-    newTag: 0ceb1bebd512494660404cd667155a6e75e74624
+    newTag: f2471bb664c45d417f506008ac9d285700359997
